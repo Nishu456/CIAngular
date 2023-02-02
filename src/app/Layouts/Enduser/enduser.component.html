@@ -1,0 +1,35 @@
+<div>
+    <nav class="navbar navbar-expand navbar-light bg-light navbar-static-top">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" routerLink="./">CI Platform</a>
+        <!-- Sidebar Toggle-->
+        <a class="navbar-brand ps-3" routerLink="./">Stories</a>
+        <a class="navbar-brand ps-3" routerLink="./">Policy</a>
+        
+        <div class="mat-body-1 ms-auto me-0 me-md-4 my-md-0">{{loginusername}}</div>
+        <button mat-icon-button class="navbar-nav me-0 me-md-4 my-md-0" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>face</mat-icon>
+              <span>My Profile</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>alarm</mat-icon>
+              <span>Volunteering Timesheet</span>
+            </button>
+            <button mat-menu-item (click)="Logout()">
+              <mat-icon>logout</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+    </nav>
+</div>
+<main>
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+  

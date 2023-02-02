@@ -1,0 +1,73 @@
+<form [formGroup]="registerModel" (ngSubmit)="onSubmit()">
+    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mb-3">
+      <p class="lead fw-normal mb-0 me-3">Register</p>
+    </div>  
+    <hr>
+    <div class="form-outline mb-4">
+      <!-- <label class="form-label" for="form3Example3">Email address</label> -->
+      <input [class.is-invalid]="firstName!.invalid && firstName!.touched" formControlName="firstName" type="text" class="form-control form-control-lg"
+        placeholder="First Name" />
+      <div *ngIf="firstName!.invalid && firstName!.touched">
+        <span class="text-danger" *ngIf="firstName!.errors!['required']"> First Name is Required. </span>
+        <span class="text-danger" *ngIf="firstName!.errors!['pattern']"> First Name must have alpha charactes only. </span>
+      </div>      
+    </div>
+
+    <div class="form-outline mb-4">
+        <!-- <label class="form-label" for="form3Example3">Email address</label> -->
+        <input [class.is-invalid]="lastName!.invalid && lastName!.touched" formControlName="lastName" type="text" class="form-control form-control-lg"
+          placeholder="Last Name" />
+          <div *ngIf="lastName!.invalid && lastName!.touched">
+            <span class="text-danger" *ngIf="lastName!.errors!['required']"> Last Name is Required. </span>
+            <span class="text-danger" *ngIf="lastName!.errors!['pattern']"> Last Name must have alpha charactes only. </span>
+          </div>  
+      </div>
+
+      <div class="form-outline mb-4">
+        <!-- <label class="form-label" for="form3Example3">Email address</label> -->
+        <input [class.is-invalid]="phoneNumber!.invalid && phoneNumber!.touched" formControlName="phoneNumber" type="tel" class="form-control form-control-lg"
+          placeholder="Phone Number" />
+          <div *ngIf="phoneNumber!.invalid && phoneNumber!.touched">
+            <span class="text-danger" *ngIf="phoneNumber!.errors!['required']"> Phone Number is Required. </span>
+            <span class="text-danger" *ngIf="phoneNumber!.errors!['pattern']"> Phone Number must have 10 digit charactes only. </span>
+          </div>  
+      </div>
+
+      <div class="form-outline mb-4">
+        <!-- <label class="form-label" for="form3Example3">Email address</label> -->
+        <input [class.is-invalid]="email!.invalid && email!.touched" formControlName="email" type="email" class="form-control form-control-lg"
+          placeholder="Email address" />
+          <div *ngIf="email!.invalid && email!.touched">
+            <span class="text-danger" *ngIf="email!.errors!['required']"> Email is Required. </span>
+            <span class="text-danger" *ngIf="email!.errors!['email']"> Please enter a valid Email. </span>
+          </div>  
+      </div>
+
+    <div class="form-outline mb-3">
+      <!-- <label class="form-label" for="form3Example4">Password</label> -->
+      <input [class.is-invalid]="password!.invalid && password!.touched" formControlName="password" type="password" class="form-control form-control-lg"
+        placeholder="Password" />
+        <div *ngIf="password!.invalid && password!.touched">
+          <span class="text-danger" *ngIf="password!.errors!['required']"> Password is Required. </span>
+          <span class="text-danger" *ngIf="password!.errors!['pattern']"> Password must contain more than 8 characters, 1 numeric, 1 upper case letter, and 1 special character($@$!%*?&). </span>
+        </div>  
+    </div>
+
+    <div class="form-outline mb-3">
+        <!-- <label class="form-label" for="form3Example4">Password</label> -->
+        <input [class.is-invalid]="(confirmPassword!.invalid && confirmPassword!.touched) || registerModel!.hasError('misMatch')" formControlName="confirmPassword" type="password" class="form-control form-control-lg"
+          placeholder="Confirm password" />
+          <div *ngIf="(confirmPassword!.invalid && confirmPassword!.touched) || registerModel!.hasError('misMatch')">
+            <span class="text-danger" *ngIf="confirmPassword!.hasError('required')"> Confirm Password is Required. </span>
+            <span class="text-danger" *ngIf="registerModel!.hasError('misMatch')"> Password and Confirm Password doesn't match. </span>
+          </div>  
+      </div>
+
+    <div class="text-center text-lg-start mt-4 pt-2">
+      <button [disabled]="!registerModel.valid" type="submit" class="btn btn-primary btn-lg"
+        style="padding-left: 2.5rem; padding-right: 2.5rem;">Register</button>
+      <p class="small fw-bold mt-2 pt-1 mb-0">Already Registered? <a href="#!"
+          class="link-danger" routerLink="/Account/Login">Login</a></p>
+    </div>
+
+  </form>

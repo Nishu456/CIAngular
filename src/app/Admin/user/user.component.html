@@ -1,0 +1,121 @@
+<div class="container mt-4">
+    <form [formGroup]="userModel" (ngSubmit)="onSubmit()">
+        <h2>{{action}} User</h2>
+        <hr>
+        <div class="form-outline mb-4">
+          <!-- <label class="form-label" for="form3Example3">Email address</label> -->
+          <input [class.is-invalid]="firstName!.invalid && firstName!.touched" formControlName="firstName" type="text" class="form-control"
+        placeholder="First Name" />
+          <div *ngIf="firstName!.invalid && firstName!.touched">
+            <span class="text-danger" *ngIf="firstName!.errors!['required']"> First Name is Required. </span>
+            <span class="text-danger" *ngIf="firstName!.errors!['pattern']"> First Name must have alpha charactes only. </span>
+          </div>      
+        </div>
+    
+        <div class="form-outline mb-4">
+            <!-- <label class="form-label" for="form3Example3">Email address</label> -->
+            <input [class.is-invalid]="lastName!.invalid && lastName!.touched" formControlName="lastName" type="text" class="form-control"
+          placeholder="Last Name" />
+              <div *ngIf="lastName!.invalid && lastName!.touched">
+                <span class="text-danger" *ngIf="lastName!.errors!['required']"> Last Name is Required. </span>
+                <span class="text-danger" *ngIf="lastName!.errors!['pattern']"> Last Name must have alpha charactes only. </span>
+              </div>  
+          </div>
+    
+          <!-- <div class="form-outline mb-4">
+            <label class="form-label" for="form3Example3">Email address</label>
+            <input [class.is-invalid]="phoneNumber!.invalid && phoneNumber!.touched" formControlName="phoneNumber" type="tel" class="form-control"
+              placeholder="Phone Number" />
+              <div *ngIf="phoneNumber!.invalid && phoneNumber!.touched">
+                <span class="text-danger" *ngIf="phoneNumber!.errors!['required']"> Phone Number is Required. </span>
+                <span class="text-danger" *ngIf="phoneNumber!.errors!['pattern']"> Phone Number must have 10 digit charactes only. </span>
+              </div>  
+          </div> -->
+
+          <div class="form-outline mb-4">
+            <!-- <label class="form-label" for="form3Example3">Email address</label> -->
+            <input [class.is-invalid]="email!.invalid && email!.touched" formControlName="email" type="email" class="form-control"
+            placeholder="Email address" />
+              <div *ngIf="email!.invalid && email!.touched">
+                <span class="text-danger" *ngIf="email!.errors!['required']"> Email is Required. </span>
+                <span class="text-danger" *ngIf="email!.errors!['email']"> Please enter a valid Email. </span>
+              </div>  
+          </div>
+    
+        <div class="form-outline mb-3" *ngIf="action == 'Add'">
+          <!-- <label class="form-label" for="form3Example4">Password</label> -->
+          <input [class.is-invalid]="password!.invalid && password!.touched" formControlName="password" type="password" class="form-control"
+        placeholder="Password" />
+            <div *ngIf="password!.invalid && password!.touched">
+              <span class="text-danger" *ngIf="password!.errors!['required']"> Password is Required. </span>
+              <span class="text-danger" *ngIf="password!.errors!['pattern']"> Password must contain more than 8 characters, 1 numeric, 1 upper case letter, and 1 special character($@$!%*?&). </span>
+            </div>  
+        </div>
+    
+        <div class="form-outline mb-3">
+            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+            <input type="text" formControlName="employeeId" class="form-control" [class.is-invalid]="employeeId!.invalid && employeeId!.touched"
+              placeholder="Employee Id" />
+              <div *ngIf="(employeeId!.invalid && employeeId!.touched)">
+                <span class="text-danger" *ngIf="employeeId!.hasError('required')"> Employee Id is Required. </span>
+              </div>
+          </div>
+        
+          <div class="form-outline mb-3">
+            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+            <select class="form-select" [class.is-invalid]="departmentId!.invalid && departmentId!.touched" formControlName="departmentId">
+                <option selected [value]="''" disabled>Department</option>
+                <option *ngFor="let department of departmentList" [value]="department.value">{{department.text}}</option>
+            </select>
+            <div *ngIf="(departmentId!.invalid && departmentId!.touched)">
+                <span class="text-danger" *ngIf="departmentId!.hasError('required')"> Department is Required. </span>
+              </div>
+          </div>
+    
+          <div class="form-outline mb-3">
+            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+            <select class="form-select" formControlName="countryId" [class.is-invalid]="countryId!.invalid && countryId!.touched" (ngModelChange)="bindCityList()">
+                <option selected [value]="''" disabled>Country</option>
+                <option *ngFor="let country of countryList" [value]="country.value">{{country.text}}</option>
+            </select>
+              <div *ngIf="(countryId!.invalid && countryId!.touched)">
+                <span class="text-danger" *ngIf="countryId!.hasError('required')"> Country is Required. </span>
+              </div>  
+          </div>
+
+          <div class="form-outline mb-3">
+            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+            <select class="form-select" formControlName="cityId" [class.is-invalid]="cityId!.invalid && cityId!.touched && countryId!.valid && countryId!.touched">
+                <option selected [value]="''" disabled>City</option>
+                <option *ngFor="let city of cityList" [value]="city.value">{{city.text}}</option>
+            </select>
+            <div *ngIf="(cityId!.invalid && cityId!.touched && countryId!.valid && countryId!.touched)">
+                <span class="text-danger" *ngIf="cityId!.hasError('required')"> City is Required. </span>
+              </div>   
+          </div>
+    
+          <div class="form-outline mb-3">
+            <!-- <label class="form-label" for="form3Example4">Password</label> -->
+            <textarea class="form-control" formControlName="profileSummary" placeholder="Profile Text"></textarea>
+              <!-- <div *ngIf="(confirmPassword!.invalid && confirmPassword!.touched) || registerModel!.hasError('misMatch')">
+                <span class="text-danger" *ngIf="confirmPassword!.hasError('required')"> Confirm Password is Required. </span>
+                <span class="text-danger" *ngIf="registerModel!.hasError('misMatch')"> Password and Confirm Password doesn't match. </span>
+              </div>   -->
+          </div>
+
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" formControlName="status">
+            <label class="form-check-label" for="flexSwitchCheckChecked" *ngIf="status!.value">Active</label>
+            <label class="form-check-label" for="flexSwitchCheckChecked" *ngIf="!status!.value">In Active</label>
+          </div>
+
+        <div class="text-center text-lg-start mt-4 pt-2">
+          <button type="submit" [disabled]="!userModel.valid" class="btn btn-primary btn-lg"
+            style="padding-left: 2.5rem; padding-right: 2.5rem; margin-right: 0.5em;">{{action}}</button>
+            <button type="buttton" class="btn btn-dark btn-lg"
+            style="padding-left: 2.5rem; padding-right: 2.5rem;" routerLink="/AdminPage/User">Back</button>
+        </div>
+    
+      </form>
+</div>
+

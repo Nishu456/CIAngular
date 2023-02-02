@@ -1,0 +1,49 @@
+#missiondesc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+            line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    height: 60px;
+}
+
+.parent{
+    position: relative;
+ }
+ .top-left{
+    position: absolute;
+    left:0;
+    top:0;
+ }
+ .top-right{
+    position: absolute;
+    right:0;
+    top:0;
+ }
+ .bottom-left{
+    position: absolute;
+    left:0;
+    bottom:0;
+ }
+ .bottom-right-up{
+    position: absolute;
+    right:6px;
+    bottom:65px;
+ }
+ .bottom-right{
+    position: absolute;
+    right:6px;
+    bottom:6px;
+ }
+ .bottom-center{
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   bottom: 0px;
+ }
+ .padding-0{
+   margin:0!important;
+	padding:0!important;
+}

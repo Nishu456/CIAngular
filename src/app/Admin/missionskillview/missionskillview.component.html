@@ -1,0 +1,47 @@
+<div class="container mt-4 mb-4">
+    <h2>Mission Skills</h2>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <mat-form-field class="form-control">
+                 <mat-label>Search</mat-label>
+                 <input matInput (keyup)="applyFilter(searchMission.value)" #searchMission>
+                 <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>             
+         </div>
+         <div class="col">
+             <!-- <button class="btn btn-primary active" type="button" style="float: right;" 
+             routerLink="/AdminPage/UpsertMission" mat-fab extended><mat-icon>add</mat-icon> Add</button> -->
+             <button class="btn btn-primary active" type="button" style="float: right;" 
+             (click)="openUpsertMissionSkill()" mat-fab extended><mat-icon>add</mat-icon> Add</button>
+         </div>      
+    </div>
+    <div class="mat-elevation-z8 mt-2 table-responsive">
+        <table mat-table [dataSource]="skillData" matSort>
+            <ng-container matColumnDef="skillTitle">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Skill Title</th>
+                <td mat-cell *matCellDef="let row">{{row.skillTitle}}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let row" [style.color]="row.status=='Active'?'green':'red'">{{row.status}}</td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let row"><a (click)="openUpsertMissionSkill(row)" 
+                    style="margin-right: 0.5em;"><mat-icon color="primary">edit</mat-icon></a>
+                    <a (click)="deleteRecord(row)"><mat-icon color="warn">delete</mat-icon></a></td> 
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="skillColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: skillColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="3" *ngIf="searchMission.value" style="text-align: center;">
+                    No data matching the filter "{{searchMission.value}}"</td>
+                <td class="mat-cell" colspan="3" *ngIf="!searchMission.value" style="text-align: center;">
+                    No Records Found</td>
+            </tr>
+        </table>
+        <mat-paginator showFirstLastButtons [pageSizeOptions]="[5, 10, 25, 50, 100]"
+        (page)="onPagination($event)"></mat-paginator>
+    </div>
+</div>

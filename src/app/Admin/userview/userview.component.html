@@ -1,0 +1,39 @@
+<div class="container-fluid mt-4">
+    <h2>Users</h2>
+    <hr>
+    <div class="row">
+        <div class="input-group col">
+            <input class="form-control" type="text" placeholder="Search for..."/>
+            <!-- <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button> -->
+        </div>
+        <div class="col">
+            <button class="btn btn-primary active" type="button" style="float: right;" routerLink="/AdminPage/UpsertUser">+ Add</button>
+        </div>             
+    </div>
+    
+    <table class="table table-striped table-bordered table-hover table-responsive mt-2">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Employee Id</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of userData">
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.employeeId}}</td>
+                <td>{{user.departmentName}}</td>
+                <td [style.color]="user.status=='Active'?'green':'red'">{{user.status}}</td>
+                <td><a routerLink="/AdminPage/UpsertUser" [queryParams]="{id: user.userId}" class="link-primary active" style="margin-right: 0.5em;">Edit</a>
+                    <a class="link-danger" (click)="deleteRecord(user)">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

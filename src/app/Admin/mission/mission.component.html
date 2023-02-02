@@ -1,0 +1,620 @@
+<h2 mat-dialog-title>{{action}} Mission</h2>
+<form [formGroup]="missionModel" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>  
+    <div class="row">
+      <div class="form-outline mb-4 col-6">
+        <mat-form-field appearance="fill" class="form-control">
+          <mat-label class="form-label fw-bold">Mission Title</mat-label>
+          <input [class.is-invalid]="missionTitle!.invalid && missionTitle!.touched" 
+          formControlName="missionTitle" matInput />
+          <mat-error *ngIf="missionTitle!.hasError('required')">
+            Mission Title is Required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-outline mb-4 col-6">
+        <mat-form-field appearance="fill" class="form-select">
+          <mat-label class="form-label fw-bold">Country</mat-label>
+          <mat-select formControlName="countryId" [class.is-invalid]="countryId!.invalid && countryId!.touched"
+          (ngModelChange)="bindCityList()">
+            <mat-option *ngFor="let country of countryList" [value]="country.value">{{country.text}}</mat-option>
+          </mat-select>
+          <mat-error  *ngIf="countryId!.hasError('required')">
+            Country is Required.
+          </mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="form-outline mb-4 col-6">
+          <mat-form-field appearance="fill" class="form-select">
+            <mat-label class="form-label fw-bold">City</mat-label>
+            <mat-select formControlName="cityId" [class.is-invalid]="cityId!.invalid && cityId!.touched 
+            && countryId!.valid && countryId!.touched">
+              <mat-option *ngFor="let city of cityList" [value]="city.value">{{city.text}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="cityId!.hasError('required') && countryId!.valid && countryId!.touched">
+              City is Required.
+            </mat-error>
+          </mat-form-field>
+          </div>
+          <div class="form-outline mb-4 col-6">
+            <mat-form-field appearance="fill" class="form-select">
+              <mat-label class="form-label fw-bold">Mission Type</mat-label>
+              <mat-select formControlName="missionType" 
+              [class.is-invalid]="missionType!.invalid && missionType!.touched">
+              <mat-option [value]="'Time'">Time</mat-option>
+              <mat-option [value]="'Goal'">Goal</mat-option>
+            </mat-select>
+            <mat-error *ngIf="missionType!.hasError('required')">
+              Mission Type is Required.
+            </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="form-outline mb-4">
+          <mat-form-field appearance="fill" class="form-control">
+            <mat-label class="form-label fw-bold">Mission Description</mat-label>
+            <textarea formControlName="missionDescription" 
+            [class.is-invalid]="missionDescription!.invalid && missionDescription!.touched" matInput></textarea>
+            <mat-error *ngIf="missionDescription!.hasError('required')">
+              Mission Description is Required.
+            </mat-error>
+          </mat-form-field> 
+        </div>
+  
+        <div class="form-outline mb-4">
+          <mat-form-field appearance="fill" class="form-control">
+            <mat-label class="form-label fw-bold">Organization Name</mat-label>
+            <input [class.is-invalid]="organizationName!.invalid && organizationName!.touched" 
+            formControlName="organizationName" matInput/>
+            <mat-error *ngIf="organizationName!.hasError('required')">
+              Organization Name is Required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="form-outline mb-4">
+          <mat-form-field appearance="fill" class="form-control">
+            <mat-label class="form-label fw-bold">Organization Details</mat-label>
+            <textarea formControlName="organizationDetail" matInput
+            [class.is-invalid]="organizationDetail!.invalid && organizationDetail!.touched"></textarea>
+            <mat-error *ngIf="organizationDetail!.hasError('required')">
+              Organization Details is Required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div class="row">
+          <div class="form-outline mb-4 col-6">
+            <mat-form-field appearance="fill" class="form-select">
+              <mat-label class="form-label fw-bold">Mission Theme</mat-label>
+              <mat-select formControlName="themeId" [class.is-invalid]="themeId!.invalid && themeId!.touched">
+                <mat-option *ngFor="let theme of themeList" [value]="theme.value">{{theme.text}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="themeId!.hasError('required')">
+                Mission Theme is Required.
+              </mat-error>
+            </mat-form-field>
+            </div>
+            <div class="form-outline mb-4 col-6">
+              <mat-form-field appearance="fill" class="form-select">
+                <mat-label class="form-label fw-bold">Mission Skills</mat-label>
+                <mat-select formControlName="skills" [class.is-invalid]="skills!.invalid && skills!.touched" multiple="true">
+                  <mat-option *ngFor="let skill of skillList" [value]="skill.value">{{skill.text}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="skills!.hasError('required')">
+                  Mission Skills is Required.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+        <div class="row">            
+          <div class="form-outline mb-3 col-6">
+            <mat-form-field appearance="fill" class="form-control">
+              <mat-label class="form-label fw-bold">Start Date</mat-label>
+              <input matInput [matDatepicker]="startdatepicker" [class.is-invalid]="startDate!.invalid && startDate!.touched" 
+            formControlName="startDate">
+            <mat-datepicker-toggle matIconSuffix [for]="startdatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #startdatepicker></mat-datepicker>
+                <mat-error *ngIf="startDate!.hasError('required')">
+                  Start Date is Required.
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-outline mb-3 col-6">
+            <mat-form-field appearance="fill" class="form-control">
+              <mat-label class="form-label fw-bold">End Date</mat-label>
+              <input matInput [matDatepicker]="enddatepicker" [class.is-invalid]="endDate!.invalid && endDate!.touched" 
+            formControlName="endDate">
+            <mat-datepicker-toggle matIconSuffix [for]="enddatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #enddatepicker></mat-datepicker>
+                <mat-error *ngIf="endDate!.hasError('required')">
+                  End Date is Required.
+                </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="form-outline mb-3 col-6">
+            <mat-form-field appearance="fill" class="form-control">
+              <mat-label class="form-label fw-bold">Total Seats</mat-label>
+              <input type="number" formControlName="totalSeats" 
+              [class.is-invalid]="totalSeats!.invalid && totalSeats!.touched"
+                matInput/>
+              <mat-error *ngIf="totalSeats!.hasError('required')">
+                Total Seats is Required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-outline mb-3 col-6">
+            <mat-form-field appearance="fill" class="form-control">
+              <mat-label class="form-label fw-bold">Registration Deadline</mat-label>
+              <input matInput [matDatepicker]="registrationdate" 
+              [class.is-invalid]="registrationDeadline!.invalid && registrationDeadline!.touched"
+              formControlName="registrationDeadline">
+              <mat-datepicker-toggle matIconSuffix [for]="registrationdate"></mat-datepicker-toggle>
+              <mat-datepicker #registrationdate></mat-datepicker>
+              <mat-error *ngIf="registrationDeadline!.hasError('required')">
+                Registration Deadline is Required.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-outline mb-4">
+          <mat-form-field appearance="fill" class="form-select">
+            <mat-label class="form-label fw-bold">Mission Availability</mat-label>
+            <mat-select formControlName="availability" [class.is-invalid]="availability!.invalid && availability!.touched">
+              <mat-option *ngFor="let availability of availabilityList" [value]="availability.value">{{availability.text}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="availability!.hasError('required')">
+              Mission Availability is Required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- <div class="row">
+          <div class="form-outline mb-3 col-6">
+            <label class="form-label fw-bold">Upload Image</label>
+            <div class="row">
+              <div class="col-7">
+                <input #Image type="file" class="form-control" 
+              placeholder="Upload Image" accept=".png, .jpeg, .jpg" />
+              <input type="text" formControlName="images" style="display: none;" #ImagePath >
+              </div>
+              <div class="col-4">
+                <button type="button" class="btn btn-primary" style="margin-right: 0.5em;"
+                 (click)="processImage(Image.files)"> Upload</button>
+                <a [style.display]="imageBase64?'':'none'" (click)="downloadImage()"> 
+                  <img src="./assets/images/download-icon.png" height="40" width="40"> </a>
+              </div>
+            </div>
+            </div> -->
+
+        <div class="row">
+          <div class="form-outline mb-3 col-6">
+            <mat-label class="form-label fw-bold">Upload Images</mat-label>
+            <!-- <mat-card>
+              <mat-card-header>
+                <mat-card-title form-label fw-bold>
+                  Upload Image
+                </mat-card-title>
+              </mat-card-header> -->
+                <!-- <div id="file-container" (drop)="dropFiles($event)" (dragover)='dragOverHandler($event)'> -->
+                <div id="file-container">
+                  Drag images to upload 
+                  <input type="file" class="file" (change)="imgfileChange($event)" [multiple]="true" accept=".png, .jpg, .jpeg">
+                </div>
+                <mat-progress-bar class="mt-1" mode="determinate" [value]="imgprogress"></mat-progress-bar>
+                <mat-list>
+                  <mat-list-item *ngFor="let file of selectedImages">
+                    <mat-icon matListItemIcon>image</mat-icon>
+                    <span matListItemTitle> {{ file.fileName }} 
+                    <mat-icon style="float: right; color: grey;" 
+                    (click)="deleteImg(file)">clear</mat-icon> 
+                  </span>
+                  </mat-list-item>
+                </mat-list>
+                <!-- <div id="file-container" *ngIf="this.selectedImages.length > 0">
+                  <div class="mat-body-1" class="filename" *ngFor="let file of selectedImages">{{selectedImages.fileName}}</div>
+                </div> -->      
+                <!-- <mat-list>
+                  <mat-list-item *ngFor="let file of this.selectedFiles" [class.upload-success]="file.uploadcompleted">
+                    <mat-icon>note</mat-icon>
+                    <div mat-line>{{file.fileName}}</div>
+                    <mat-progress-bar class="mr-4" mode="determinate" value="file.uploadedPercent"></mat-progress-bar>
+                    <div>
+                      <mat-icon style="cursor: grab; margin-top:2px;" (click)="deleteFile(file)">delete</mat-icon>
+                    </div>
+                  </mat-list-item>
+                </mat-list> -->
+              <button (click)="uploadImages()" type="button" class="btn btn-primary mt-3" [disabled]="this.selectedImages.length <=0">
+                Upload Images
+              </button> 
+            <!-- </mat-card> -->
+            <!-- <label class="form-label fw-bold">Upload Image</label>
+            <div class="file-container">
+              <input type="file" (change)="processImage($any($event).target.files)" class="file" [multiple]="true"
+              accept=".png, .jpeg, .jpg">
+              <input type="text" formControlName="images" style="display: none;">
+            </div> -->
+          </div>
+
+          <div class="form-outline mb-3 col-6">
+            <mat-label class="form-label fw-bold">Upload Documents</mat-label>
+                <div id="file-container">
+                  Drag documents to upload 
+                  <input type="file" class="file" (change)="docfileChange($event)" [multiple]="true" accept=".pdf, .xls, .xlsx, .doc, .docx">
+                </div>
+                <mat-progress-bar class="mt-1" mode="determinate" [value]="docprogress"></mat-progress-bar>
+                <mat-list *ngIf="this.selectedDocs.length > 0">
+                  <mat-list-item *ngFor="let file of selectedDocs">
+                    <mat-icon matListItemIcon>description</mat-icon>
+                    <span matListItemTitle> {{ file.fileName}} 
+                    <mat-icon style="float: right; color: grey;" 
+                    (click)="deleteDoc(file)">clear</mat-icon> 
+                  </span>
+                  </mat-list-item>
+                </mat-list>
+                <!-- <div id="file-container" *ngIf="this.selectedDocs.length > 0">
+                  <div class="mat-body-1" *ngFor="let file of selectedDocs">{{file.fileName}}</div>
+                </div> -->                
+              <button (click)="uploadDocuments()" type="button" class="btn btn-primary mt-3" [disabled]="this.selectedDocs.length <=0">
+                Upload Documents
+              </button> 
+          </div>
+
+          <!-- <div class="form-outline mb-3 col-6">
+            <label class="form-label fw-bold">Upload Document</label>
+            <div class="file-container">
+              <input type="file" (change)="processDocument($any($event).target.files)" class="file" [multiple]="true"
+              accept=".pdf">
+              <input type="text" formControlName="documents" style="display: none;">
+            </div>            
+          </div>-->
+       </div>     
+  
+            <!-- <div class="form-outline mb-3 col-6">
+              <label class="form-label fw-bold">Upload Document</label>
+              <div class="row">
+                <div class="col-7">
+                  <input #Doc type="file" data-provide="datepicker-inline" class="form-control"
+                    placeholder="Upload Document" accept=".pdf" />
+                  <input type="text" formControlName="documents" #DocPath style="display: none;">
+                </div>
+                <div class="col-4">
+                  <button type="button" class="btn btn-primary" style="margin-right: 0.5em;" 
+                  (click)="processDocument(Doc.files)"> Upload</button>
+                  <a [style.display]="docBase64?'':'none'" (click)="downloadDoc()"> 
+                    <img src="./assets/images/download-icon.png" height="40" width="40"> </a>
+                </div>
+              </div>
+            </div>
+         </div>      -->
+  </div>
+  <div mat-dialog-actions>
+    <button type="submit" [disabled]="!missionModel.valid" class="btn btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem; margin-right: 0.5em;" 
+              mat-raised-button color="primary">{{action}}</button>
+              <button class="btn btn-lg" mat-raised-button [mat-dialog-close]="true"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;" color="warn">Back</button>
+  </div>
+</form>
+
+<!-- <mat-form-field appearance="outline">
+              <mat-label class="form-label fw-bold">Upload Image</mat-label> 
+              <ngx-mat-file-input accept=".png, .jpeg, .jpg" matInput></ngx-mat-file-input>
+            </mat-form-field>     -->
+<!-- <div class="container mt-4">
+    <form [formGroup]="missionModel" (ngSubmit)="onSubmit()">
+        <h2>{{action}} Mission</h2>
+        <hr>
+        <div class="row">
+            <div class="form-outline mb-4 col-6">
+              <mat-form-field appearance="fill" class="form-control">
+                <mat-label class="form-label fw-bold">Mission Title</mat-label>
+                <input [class.is-invalid]="missionTitle!.invalid && missionTitle!.touched" 
+                formControlName="missionTitle" matInput />
+                <mat-error *ngIf="missionTitle!.hasError('required')">
+                  Mission Title is Required.
+                </mat-error>
+              </mat-form-field>
+             
+                <label class="form-label fw-bold">Mission Title</label>
+                <input [class.is-invalid]="missionTitle!.invalid && missionTitle!.touched" formControlName="missionTitle" type="text" class="form-control"
+              placeholder="Mission Title" /> -->
+                <!-- <div *ngIf="missionTitle!.invalid && missionTitle!.touched">
+                  <span class="text-danger" *ngIf="missionTitle!.errors!['required']"> Mission Title is Required. </span>
+                  <span class="text-danger" *ngIf="missionTitle!.errors!['pattern']"> First Name must have alpha charactes only. </span>
+                </div>       
+              </div>
+      
+              <div class="form-outline mb-4 col-6">
+                <mat-form-field appearance="fill" class="form-select">
+                  <mat-label class="form-label fw-bold">Country</mat-label>
+                  <mat-select formControlName="countryId" [class.is-invalid]="countryId!.invalid && countryId!.touched"
+                  (ngModelChange)="bindCityList()">
+                    <mat-option *ngFor="let country of countryList" [value]="country.value">{{country.text}}</mat-option>
+                  </mat-select>
+                  <mat-error  *ngIf="countryId!.hasError('required')">
+                    Country is Required.
+                  </mat-error>
+                </mat-form-field>
+                   <label class="form-label fw-bold">Country</label>
+                  <select class="form-select" formControlName="countryId" [class.is-invalid]="countryId!.invalid && countryId!.touched" (ngModelChange)="bindCityList()">
+                      <option selected [value]="''" disabled>Country</option>
+                      <option *ngFor="let country of countryList" [value]="country.value">{{country.text}}</option>
+                  </select> -->
+                    <!-- <div *ngIf="(countryId!.invalid && countryId!.touched)">
+                      <span class="text-danger" *ngIf="countryId!.hasError('required')"> Country is Required. </span>
+                    </div>   
+                </div>
+        </div>
+        
+        <div class="row">
+            <div class="form-outline mb-4 col-6">
+              <mat-form-field appearance="fill" class="form-select">
+                <mat-label class="form-label fw-bold">City</mat-label>
+                <mat-select formControlName="cityId" [class.is-invalid]="cityId!.invalid && cityId!.touched 
+                && countryId!.valid && countryId!.touched">
+                  <mat-option *ngFor="let city of cityList" [value]="city.value">{{city.text}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="cityId!.hasError('required') && countryId!.valid && countryId!.touched">
+                  City is Required.
+                </mat-error>
+              </mat-form-field>
+                <label class="form-label fw-bold">City</label>
+                <select class="form-select" formControlName="cityId" [class.is-invalid]="cityId!.invalid && cityId!.touched && countryId!.valid && countryId!.touched">
+                    <option selected [value]="''" disabled>City</option>
+                    <option *ngFor="let city of cityList" [value]="city.value">{{city.text}}</option>
+                </select>
+                <div *ngIf="(cityId!.invalid && cityId!.touched && countryId!.valid && countryId!.touched)">
+                    <span class="text-danger" *ngIf="cityId!.hasError('required')"> City is Required. </span>
+                  </div>    
+              </div>
+        
+            <div class="form-outline mb-4 col-6">
+              <mat-form-field appearance="fill" class="form-select">
+                <mat-label class="form-label fw-bold">Mission Type</mat-label>
+                <mat-select formControlName="missionType" 
+                [class.is-invalid]="missionType!.invalid && missionType!.touched">
+                <mat-option [value]="'Time'">Time</mat-option>
+                <mat-option [value]="'Goal'">Goal</mat-option>
+              </mat-select>
+              <mat-error *ngIf="missionType!.hasError('required')">
+                Mission Type is Required.
+              </mat-error>
+              </mat-form-field>
+               <label class="form-label fw-bold">Mission Type</label>
+                <select class="form-select" formControlName="missionType" [class.is-invalid]="missionType!.invalid && missionType!.touched">
+                    <option selected [value]="''" disabled>Mission Type</option>
+                    <option [value]="'Time'">Time</option>
+                    <option [value]="'Goal'">Goal</option>
+                </select>
+                <div *ngIf="(missionType!.invalid && missionType!.touched)">
+                    <span class="text-danger" *ngIf="missionType!.hasError('required')"> Mission Type is Required. </span>
+                  </div>    
+              </div>
+        </div>
+
+          <div class="form-outline mb-4"
+            <mat-form-field appearance="fill" class="form-control">
+              <mat-label class="form-label fw-bold">Mission Description</mat-label>
+              <textarea formControlName="missionDescription" 
+              [class.is-invalid]="missionDescription!.invalid && missionDescription!.touched" matInput></textarea>
+              <mat-error *ngIf="missionDescription!.hasError('required')">
+                Mission Description is Required.
+              </mat-error>
+            </mat-form-field> 
+            <label class="form-label fw-bold">Mission Description</label>
+            <ejs-richtexteditor class="form-control" formControlName="missionDescription" 
+            [class.is-invalid]="missionDescription!.invalid && missionDescription!.touched"></ejs-richtexteditor>
+            <div *ngIf="missionDescription!.invalid && missionDescription!.touched">
+              <span class="text-danger" *ngIf="missionDescription!.errors!['required']"> Mission Description is Required. </span>
+               <span class="text-danger" *ngIf="organizationName!.errors!['email']"> Please enter a valid Email. </span> 
+            </div>  
+          </div>
+
+          <div >
+            <label class="form-label"  >Email address</label> -->
+            <!-- <textarea class="form-control" formControlName="missionDescription" [class.is-invalid]="missionDescription!.invalid && missionDescription!.touched" 
+            placeholder="Mission Description"></textarea> 
+            <div *ngIf="missionDescription!.invalid && missionDescription!.touched">
+                <span class="text-danger" *ngIf="missionDescription!.errors!['required']"> Mission Description is Required. </span>
+                 <span class="text-danger" *ngIf="organizationName!.errors!['email']"> Please enter a valid Email. </span> 
+              </div>  
+          </div> 
+
+          <div class="form-outline mb-4">
+            <mat-form-field appearance="fill" class="form-control">
+              <mat-label class="form-label fw-bold">Organization Name</mat-label>
+              <input [class.is-invalid]="organizationName!.invalid && organizationName!.touched" 
+              formControlName="organizationName" matInput/>
+              <mat-error *ngIf="organizationName!.hasError('required')">
+                Organization Name is Required.
+              </mat-error>
+            </mat-form-field>
+             <label class="form-label fw-bold">Organization Name</label>
+            <input [class.is-invalid]="organizationName!.invalid && organizationName!.touched" formControlName="organizationName" type="text" class="form-control"
+            placeholder="Organization Name" />
+              <div *ngIf="organizationName!.invalid && organizationName!.touched">
+                <span class="text-danger" *ngIf="organizationName!.errors!['required']"> Organization Name is Required. </span>
+                <span class="text-danger" *ngIf="organizationName!.errors!['email']"> Please enter a valid Email. </span> 
+              </div>   
+          </div>
+    
+          <div class="form-outline mb-4">
+            <mat-form-field appearance="fill" class="form-control">
+              <mat-label class="form-label fw-bold">Organization Details</mat-label>
+              <textarea formControlName="organizationDetail" matInput
+              [class.is-invalid]="organizationDetail!.invalid && organizationDetail!.touched"></textarea>
+              <mat-error *ngIf="organizationDetail!.hasError('required')">
+                Organization Details is Required.
+              </mat-error>
+            </mat-form-field>
+            <label class="form-label fw-bold">Organization Details</label>
+            <ejs-richtexteditor class="form-control" formControlName="organizationDetail" 
+            [class.is-invalid]="organizationDetail!.invalid && organizationDetail!.touched"></ejs-richtexteditor>
+            <div *ngIf="organizationDetail!.invalid && organizationDetail!.touched">
+              <span class="text-danger" *ngIf="organizationDetail!.errors!['required']"> Organization Details is Required. </span>
+              <span class="text-danger" *ngIf="organizationName!.errors!['email']"> Please enter a valid Email. </span> 
+            </div> 
+          </div>
+
+           <div class="form-outline mb-4">
+            <label class="form-label"  >Email address</label> -->
+            <!-- <textarea class="form-control" formControlName="organizationDetails" [class.is-invalid]="organizationDetails!.invalid && organizationDetails!.touched" 
+            placeholder="Organization Details"></textarea> 
+            <div *ngIf="organizationDetails!.invalid && organizationDetails!.touched">
+                <span class="text-danger" *ngIf="organizationDetails!.errors!['required']"> Organization Details is Required. </span>
+                <span class="text-danger" *ngIf="organizationName!.errors!['email']"> Please enter a valid Email. </span>
+              </div>  
+              <input [class.is-invalid]="startDate!.invalid && startDate!.touched" formControlName="startDate" type="text" class="form-control"
+              placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')"  />
+          </div> 
+
+          <div class="row">            
+            <div class="form-outline mb-3 col-6">
+              <mat-form-field appearance="fill" class="form-control">
+                <mat-label class="form-label fw-bold">Start Date</mat-label>
+                <input matInput [matDatepicker]="startdatepicker" [class.is-invalid]="startDate!.invalid && startDate!.touched" 
+              formControlName="startDate">
+              <mat-datepicker-toggle matIconSuffix [for]="startdatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #startdatepicker></mat-datepicker>
+                  <mat-error *ngIf="startDate!.hasError('required')">
+                    Start Date is Required.
+                  </mat-error>
+              </mat-form-field>
+                 <label class="form-label fw-bold">Start Date</label>
+                <input [class.is-invalid]="startDate!.invalid && startDate!.touched" formControlName="startDate" type="date" class="form-control"
+              placeholder="Start Date" /> -->
+                  <!-- <div *ngIf="startDate!.invalid && startDate!.touched">
+                    <span class="text-danger" *ngIf="startDate!.errors!['required']"> Start Date is Required. </span>
+                    <span class="text-danger" *ngIf="startDate!.errors!['pattern']"> Password must contain more than 8 characters, 1 numeric, 1 upper case letter, and 1 special character($@$!%*?&). </span> 
+                  </div>  
+              </div>
+          
+              <div class="form-outline mb-3 col-6">
+                <mat-form-field appearance="fill" class="form-control">
+                  <mat-label class="form-label fw-bold">End Date</mat-label>
+                  <input matInput [matDatepicker]="enddatepicker" [class.is-invalid]="endDate!.invalid && endDate!.touched" 
+                formControlName="endDate">
+                <mat-datepicker-toggle matIconSuffix [for]="enddatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #enddatepicker></mat-datepicker>
+                    <mat-error *ngIf="endDate!.hasError('required')">
+                      End Date is Required.
+                    </mat-error>
+                </mat-form-field>
+                <label class="form-label fw-bold">End Date</label>
+                  <input type="date" formControlName="endDate" class="form-control" [class.is-invalid]="endDate!.invalid && endDate!.touched"
+                    placeholder="End Date"  />
+                    <div *ngIf="(endDate!.invalid && endDate!.touched)">
+                      <span class="text-danger" *ngIf="endDate!.hasError('required')"> End Date is Required. </span>
+                    </div> 
+                </div>
+          </div>
+        
+          <div class="row">
+            <div class="form-outline mb-3 col-6">
+              <mat-form-field appearance="fill" class="form-control">
+                <mat-label class="form-label fw-bold">Total Seats</mat-label>
+                <input type="number" formControlName="totalSeats" 
+                [class.is-invalid]="totalSeats!.invalid && totalSeats!.touched"
+                  matInput/>
+                <mat-error *ngIf="totalSeats!.hasError('required')">
+                  Total Seats is Required
+                </mat-error>
+              </mat-form-field>
+                <label class="form-label fw-bold">Total Seats</label>
+                <input type="number" formControlName="totalSeats" class="form-control" [class.is-invalid]="totalSeats!.invalid && totalSeats!.touched"
+                  placeholder="Total Seats" />
+                  <div *ngIf="(totalSeats!.invalid && totalSeats!.touched)">
+                    <span class="text-danger" *ngIf="totalSeats!.hasError('required')"> Total Seats is Required. </span>
+                  </div> 
+              </div>
+    
+              <div class="form-outline mb-3 col-6">
+                <mat-form-field appearance="fill" class="form-control">
+                  <mat-label class="form-label fw-bold">Registration Deadline</mat-label>
+                  <input matInput [matDatepicker]="registrationdate" 
+                  [class.is-invalid]="registrationDeadline!.invalid && registrationDeadline!.touched"
+                  formControlName="registrationDeadline">
+                  <mat-datepicker-toggle matIconSuffix [for]="registrationdate"></mat-datepicker-toggle>
+                  <mat-datepicker #registrationdate></mat-datepicker>
+                  <mat-error *ngIf="registrationDeadline!.hasError('required')">
+                    Registration Deadline is Required.
+                  </mat-error>
+                </mat-form-field>
+                 <label class="form-label fw-bold">Registration Deadline</label>
+                <input type="date" data-provide="datepicker-inline" formControlName="registrationDeadline" class="form-control" [class.is-invalid]="registrationDeadline!.invalid && registrationDeadline!.touched"
+                  placeholder="Registration Deadline"  />
+                  <div *ngIf="(registrationDeadline!.invalid && registrationDeadline!.touched)">
+                    <span class="text-danger" *ngIf="registrationDeadline!.hasError('required')"> Registration Deadline is Required. </span>
+                  </div> 
+              </div>
+            </div>
+
+              <div class="row">
+                <div class="form-outline mb-3 col-6">
+                  <label class="form-label fw-bold">Upload Image</label>
+                  <div class="row">
+                    <div class="col-9">
+                     <mat-form-field appearance="fill" class="form-control">
+                        <mat-label class="form-label fw-bold">Upload Image</mat-label>
+                      </mat-form-field> 
+                      <input #Image type="file" class="form-control" 
+                    placeholder="Upload Image" accept=".png, .jpeg, .jpg" />
+                    <input type="text" formControlName="images" style="display: none;" #ImagePath >
+                    <input  type="text" [value]="imagesupl.value">                    
+                    </div>
+                    <div class="col-3">
+                      <button type="button" class="btn btn-primary" style="margin-right: 0.5em;"
+                       [disabled]="!Image.files?.length" (click)="processImage(Image.files)"> Upload</button>
+                      <a [style.display]="imageBase64?'':'none'" (click)="downloadImage()"> 
+                        <img src="./assets/images/download-icon.png" height="40" width="40"> </a>
+                    </div>
+                  </div>
+                  </div>
+        
+                  <div class="form-outline mb-3 col-6">
+                    <label class="form-label fw-bold">Upload Document</label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input #Doc type="file" data-provide="datepicker-inline" class="form-control"
+                          placeholder="Upload Document" accept=".pdf" />
+                        <input type="text" formControlName="documents" #DocPath style="display: none;">
+                      </div>
+                      <div class="col-3">
+                        <button type="button" class="btn btn-primary" style="margin-right: 0.5em;" 
+                        [disabled]="!Doc.files?.length" (click)="processDocument(Doc.files)"> Upload</button>
+                        <a [style.display]="docBase64?'':'none'" (click)="downloadDoc()"> 
+                          <img src="./assets/images/download-icon.png" height="40" width="40"> </a>
+                      </div>
+                    </div>
+                       <div *ngIf="(documents!.invalid && documents!.touched)">
+                        <span class="text-danger" *ngIf="documents!.hasError('required')"> Registration Deadline is Required. </span>
+                      </div> 
+                    </div>                    
+          </div>
+          <div class="row">
+            <h6 class="text-danger fw-bold">Note: </h6>
+          </div>
+
+        <div class="text-center text-lg-start mt-4 pt-2 mb-4">
+          <button type="submit" [disabled]="!missionModel.valid" class="btn btn-lg"
+            style="padding-left: 2.5rem; padding-right: 2.5rem; margin-right: 0.5em;" 
+            mat-raised-button color="primary">{{action}}</button>
+            <button type="buttton" class="btn btn-lg"
+            style="padding-left: 2.5rem; padding-right: 2.5rem;" mat-raised-button color="accent"
+            routerLink="/AdminPage/Mission">Back</button>
+        </div>
+      </form>
+      Mission Theme
+      Mission Skill
+      Mission Availabilitym
+</div> -->
