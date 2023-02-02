@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { VolunteerService } from 'src/app/Services/volunteer.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-fetchmissions',
@@ -20,6 +22,9 @@ export class FetchmissionsComponent implements OnInit {
   missionDescription = '';
   organizationDetails = '';
   display = 'grid';
+  searchGrid: string[] = [];
+  separatorKeyCodes: number[] = [ENTER, COMMA];
+  reset = "";
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
@@ -32,7 +37,7 @@ export class FetchmissionsComponent implements OnInit {
     this.getMissionRecords(0, 9)
   }
 
-  getMissionRecords(pageIndex: number, pageSize: number){
+  getMissionRecords(pageIndex: number, pageSize: number ){
     this.volunteer.fetchMissions(pageIndex, pageSize).subscribe(
       (res: any) => {
         this.volunteermissions = res.volnteerMissions;
@@ -69,5 +74,33 @@ export class FetchmissionsComponent implements OnInit {
     console.log(event.pageIndex);
     console.log(event.pageSize);
     this.getMissionRecords(event.pageIndex, event.pageSize)
+  }
+
+  addFilter(event: MatChipInputEvent): void{
+    const value = (event.value || '').trim();
+    if(value){
+      this.searchGrid.push(value);
+    }
+    event.chipInput!.clear();
+  }
+
+  removeFilter(value: string){
+    const index = this.searchGrid.indexOf(value);
+
+    if(index >= 0){
+      this.searchGrid.splice(index, 1);
+    }
+  }
+
+  add(event: MatSelectChange){
+    const value = event.value;
+    
+    if(value){
+      this.searchGrid.push(value);
+    }
+  }
+
+  clearFilter(){
+    this.searchGrid = [];
   }
 }

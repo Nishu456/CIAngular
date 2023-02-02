@@ -16,6 +16,7 @@ import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MaterialModule } from './material/material.module';
 import { EnduserComponent } from './Layouts/Enduser/enduser.component';
 import { EnduserModule } from './Enduser/enduser.module';
+import { MAT_CHIP, MAT_CHIP_REMOVE } from '@angular/material/chips';
 
 
 @NgModule({
@@ -38,8 +39,8 @@ import { EnduserModule } from './Enduser/enduser.module';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    DatePipe,
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    {provide: MAT_CHIP, useValue: []}
   ],
   bootstrap: [AppComponent]
 })

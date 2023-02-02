@@ -35,8 +35,8 @@ export class MissionviewComponent implements OnInit{
   //   setTimeout(() => this.missionData.sort = this.sort, 1000);
   // }
 
-  getMissionDatafromServer(pageIndex: number, pageSize: number){
-    this.mission.getAllMissionData(pageIndex, pageSize).subscribe(
+  getMissionDatafromServer(pageIndex: number, pageSize: number, filterValue: string = ""){
+    this.mission.getAllMissionData(pageIndex, pageSize, filterValue).subscribe(
       (res: any) => {
         this.missionData = new MatTableDataSource(res.missions);
         this.totalRecords = res.totalRecords;
@@ -94,10 +94,11 @@ export class MissionviewComponent implements OnInit{
 
   applyFilter(value: string){
     const filterValue = value;
-    this.missionData.filter = filterValue.trim().toLowerCase();
-    if(this.missionData.paginator){
-      this.missionData.paginator.firstPage();
-    }
+    this.getMissionDatafromServer(0,5,filterValue.trim().toLowerCase());
+    // this.missionData.filter = filterValue.trim().toLowerCase();
+    // if(this.missionData.paginator){
+    //   this.missionData.paginator.firstPage();
+    // }
   }
 
   openUpsertMission(missionId?: number){
@@ -113,7 +114,7 @@ export class MissionviewComponent implements OnInit{
      });
   }
 
-  onPagination(event: any){
-    this.getMissionDatafromServer(event.pageIndex, event.pageSize);
+  onPagination(event: any, filterValue: string){
+    this.getMissionDatafromServer(event.pageIndex, event.pageSize, filterValue);
   }
 }

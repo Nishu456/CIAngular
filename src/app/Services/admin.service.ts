@@ -111,11 +111,12 @@ export class AdminService {
     }
   }  
 
-  getAllMissionData(pageIndex: number, pageSize: number){
-    return this.http.get(`${this.apiBaseurl}Admin/getMissionData?pageIndex=${pageIndex}&pageSize=${pageSize}`).pipe(
-      map(res => res),
-      catchError(error => throwError(error))
-    );
+  getAllMissionData(pageIndex: number, pageSize: number, filterValue: string){
+    return this.http.get(`${this.apiBaseurl}Admin/getMissionData?pageIndex=${pageIndex}
+                    &pageSize=${pageSize}&filterValue=${filterValue}`).pipe(
+                    map(res => res),
+                    catchError(error => throwError(error))
+                  );
   }
 
   deleteMission(id: number){

@@ -51,7 +51,7 @@
         </tr>
     </table>
     <mat-paginator showFirstLastButtons [pageSizeOptions]="[5,10,25,50,100]" aria-label="Select page of mission"
-    (page)="onPagination($event)"></mat-paginator>
+    (page)="onPagination($event, searchMission.value)"></mat-paginator>
 </div>
 
 <!-- <ng-container matColumnDef="endDate">
