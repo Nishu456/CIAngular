@@ -23,6 +23,7 @@ export class FetchmissionsComponent implements OnInit {
   organizationDetails = '';
   display = 'grid';
   searchGrid: string[] = [];
+  filterValues: string = "";
   separatorKeyCodes: number[] = [ENTER, COMMA];
   reset = "";
 
@@ -34,12 +35,14 @@ export class FetchmissionsComponent implements OnInit {
           }
 
   ngOnInit(): void {
-    this.getMissionRecords(0, 9)
+    this.getMissionRecords(0, 9);
   }
 
-  getMissionRecords(pageIndex: number, pageSize: number ){
-    this.volunteer.fetchMissions(pageIndex, pageSize).subscribe(
+  getMissionRecords(pageIndex: number, pageSize: number, filterValues?: string){
+    this.volunteer.fetchMissions(pageIndex, pageSize, filterValues).subscribe(
       (res: any) => {
+        console.log(res);
+        
         this.volunteermissions = res.volnteerMissions;
         this.countries = res.country;
         this.cities = res.city;
@@ -79,8 +82,10 @@ export class FetchmissionsComponent implements OnInit {
   addFilter(event: MatChipInputEvent): void{
     const value = (event.value || '').trim();
     if(value){
-      this.searchGrid.push(value);
+      this.searchGrid.push(value.toLowerCase());
     }
+    this.filterValues = this.searchGrid.toString();
+    this.getMissionRecords(0, 9, this.filterValues);
     event.chipInput!.clear();
   }
 
@@ -90,17 +95,24 @@ export class FetchmissionsComponent implements OnInit {
     if(index >= 0){
       this.searchGrid.splice(index, 1);
     }
+
+    this.filterValues = this.searchGrid.toString();
+    this.getMissionRecords(0, 9, this.filterValues);
   }
 
   add(event: MatSelectChange){
     const value = event.value;
     
     if(value){
-      this.searchGrid.push(value);
+      this.searchGrid.push(value.toLowerCase());
     }
+    this.filterValues = this.searchGrid.toString();
+    this.getMissionRecords(0, 9, this.filterValues);
   }
 
   clearFilter(){
     this.searchGrid = [];
+    this.filterValues = '';
+    this.getMissionRecords(0, 9);
   }
 }

@@ -39,6 +39,7 @@ import { MAT_CHIP, MAT_CHIP_REMOVE } from '@angular/material/chips';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    DatePipe,
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     {provide: MAT_CHIP, useValue: []}
   ],

@@ -169,6 +169,8 @@ export class MissionComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log(this.missionModel.value);
+    
     this.mission.postMissionData(this.missionModel.value, this.missionId)
     .subscribe(
       res => {
