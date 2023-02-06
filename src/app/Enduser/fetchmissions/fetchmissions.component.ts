@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { VolunteerService } from 'src/app/Services/volunteer.service';
 import { MatSelectChange } from '@angular/material/select';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-fetchmissions',
@@ -26,6 +27,10 @@ export class FetchmissionsComponent implements OnInit {
   filterValues: string = "";
   separatorKeyCodes: number[] = [ENTER, COMMA];
   reset = "";
+  dataprogress!: number;
+  isLoading!: boolean;
+  favMissionId: number[] = [];
+  sortBy: string = "";
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
@@ -38,20 +43,25 @@ export class FetchmissionsComponent implements OnInit {
     this.getMissionRecords(0, 9);
   }
 
-  getMissionRecords(pageIndex: number, pageSize: number, filterValues?: string){
-    this.volunteer.fetchMissions(pageIndex, pageSize, filterValues).subscribe(
-      (res: any) => {
-        console.log(res);
-        
-        this.volunteermissions = res.volnteerMissions;
-        this.countries = res.country;
-        this.cities = res.city;
-        this.themes = res.themes;
-        this.skills = res.skills;
-        this.totalcount = res.totalCount;
-        this.paginator.pageIndex = pageIndex;
-        this.paginator.length = this.totalcount;
-        console.log(res);
+  getMissionRecords(pageIndex: number, pageSize: number, filterValues?: string, orderBy?: string){
+    this.volunteer.fetchMissions(pageIndex, pageSize, filterValues, orderBy).subscribe(
+      (event: any) => {
+        if(event.type === HttpEventType.DownloadProgress){
+          this.isLoading = true;
+          this.dataprogress = Math.round(100 * event.loaded / event.total);
+        }
+        else if(event.type === HttpEventType.Response){          
+          this.isLoading = false;
+          setTimeout(() => this.volunteermissions = event.body.volnteerMissions, 500);
+          this.countries = event.body.country;
+          this.cities = event.body.city;
+          this.themes = event.body.themes;
+          this.skills = event.body.skills;
+          this.totalcount = event.body.totalCount;
+          this.favMissionId = event.body.favMissions;
+          setTimeout(() => this.paginator.pageIndex = pageIndex, 500);
+          setTimeout(() => this.paginator.length = this.totalcount, 500);
+        }
       },
       error => {
         console.log(error);
@@ -74,9 +84,7 @@ export class FetchmissionsComponent implements OnInit {
   }
 
   onPagination(event: any){
-    console.log(event.pageIndex);
-    console.log(event.pageSize);
-    this.getMissionRecords(event.pageIndex, event.pageSize)
+    this.getMissionRecords(event.pageIndex, event.pageSize, this.filterValues, this.sortBy)
   }
 
   addFilter(event: MatChipInputEvent): void{
@@ -85,7 +93,7 @@ export class FetchmissionsComponent implements OnInit {
       this.searchGrid.push(value.toLowerCase());
     }
     this.filterValues = this.searchGrid.toString();
-    this.getMissionRecords(0, 9, this.filterValues);
+    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
     event.chipInput!.clear();
   }
 
@@ -95,9 +103,8 @@ export class FetchmissionsComponent implements OnInit {
     if(index >= 0){
       this.searchGrid.splice(index, 1);
     }
-
     this.filterValues = this.searchGrid.toString();
-    this.getMissionRecords(0, 9, this.filterValues);
+    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
   }
 
   add(event: MatSelectChange){
@@ -106,13 +113,44 @@ export class FetchmissionsComponent implements OnInit {
     if(value){
       this.searchGrid.push(value.toLowerCase());
     }
-    this.filterValues = this.searchGrid.toString();
-    this.getMissionRecords(0, 9, this.filterValues);
+    this.filterValues = this.searchGrid.toString();  
+    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
   }
 
   clearFilter(){
     this.searchGrid = [];
-    this.filterValues = '';
-    this.getMissionRecords(0, 9);
+    this.filterValues = "";
+    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
+  }
+
+  addtoFavorite(missionId: number){
+    this.volunteer.upsertFavMissions(missionId).subscribe(
+      res => {
+        this.favMissionId.push(missionId);
+        console.log(res)},
+      error => console.log(error)
+    );
+  }
+
+  removeFavorite(missionId: number){
+    this.volunteer.removeFavMissions(missionId).subscribe(
+      res => {
+        const index = this.favMissionId.indexOf(missionId);
+
+        if(index >= 0){
+          this.favMissionId.splice(index, 1);
+        }
+        console.log(res)},
+      error => console.log(error)
+    );
+  }
+
+  orderBy(event: MatSelectChange){
+    const value = event.value;
+
+    if(value){
+      this.sortBy = value;
+      this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
+    }   
   }
 }

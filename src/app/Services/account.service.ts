@@ -70,7 +70,7 @@ export class AccountService {
       return this.userPayload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
   }
 
-  getFullName(){
+  getUserName(){
     if(this.userPayload)
       return this.userPayload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
   }

@@ -14,7 +14,7 @@ export class AdminComponent {
   currentdatetime: Date;
 
   constructor(private logoutservice: AccountService, private router: Router){
-    this.loginusername = this.logoutservice.getFullName();
+    this.loginusername = this.logoutservice.getUserName();
     this.currentdatetime = new Date()
     this.currentMenu = router.url.split("/")[2];
   }

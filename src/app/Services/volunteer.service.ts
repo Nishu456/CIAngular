@@ -28,10 +28,27 @@ export class VolunteerService {
   //   }    
   // }
 
-  fetchMissions(pageIndex: number, pageSize: number, filterValues: string = ""){
-     return this.http.get(`${this.apiBaseurl}Volunteer/volunteerMission?pageIndex=${pageIndex}&pageSize=${pageSize}&filterValues=${filterValues}`).pipe(
-      map(res => res),
+  fetchMissions(pageIndex: number, pageSize: number, filterValues: string = "", orderBy:string = ""){
+     return this.http.get(`${this.apiBaseurl}Volunteer/volunteerMission?pageIndex=${pageIndex}&pageSize=${pageSize}&filterValues=${filterValues}&orderBy=${orderBy}`, {
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(
+      map(event => event),
       catchError(error => throwError(error))
       );
   }
+
+  upsertFavMissions(missionId: number){
+    return this.http.post(`${this.apiBaseurl}Volunteer/upsertFavMissions`,missionId).pipe(
+      map(res => res),
+      catchError(error => throwError(error))
+      );
+    }
+
+    removeFavMissions(missionId: number){
+      return this.http.delete(`${this.apiBaseurl}Volunteer/removeFavMissions?missionId=${missionId}`).pipe(
+        map(res => res),
+        catchError(error => throwError(error))
+        );
+      }
 }

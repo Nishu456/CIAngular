@@ -11,7 +11,7 @@ export class EnduserComponent {
   loginusername = "";
 
   constructor(private logoutservice: AccountService){
-    this.loginusername = this.logoutservice.getFullName();
+    this.loginusername = this.logoutservice.getUserName();
   }
   
   Logout(){
