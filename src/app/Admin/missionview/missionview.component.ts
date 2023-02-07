@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ImissionData } from 'src/app/Interfaces/ICI';
 import { MissionComponent } from '../mission/mission.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-missionview',
@@ -21,7 +22,8 @@ export class MissionviewComponent implements OnInit{
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
-  constructor(private mission: AdminService, private dialog: MatDialog){
+  constructor(private mission: AdminService, private dialog: MatDialog,
+              private router: Router){
    }
 
   ngOnInit(): void {
@@ -49,6 +51,9 @@ export class MissionviewComponent implements OnInit{
       },
       error => {
         console.log('error', error)
+        if(error.error.status == 400 && error.error.title == 'Bad Request'){
+          this.router.navigate(['/AdminPage/error'])
+        }
       }
     );
   }

@@ -17,6 +17,7 @@ import { MaterialModule } from './material/material.module';
 import { EnduserComponent } from './Layouts/Enduser/enduser.component';
 import { EnduserModule } from './Enduser/enduser.module';
 import { MAT_CHIP, MAT_CHIP_REMOVE } from '@angular/material/chips';
+import { ErrorComponent } from './Shared/error/error.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MAT_CHIP, MAT_CHIP_REMOVE } from '@angular/material/chips';
     AccountComponent,
     AdminComponent,
     ImageTypeValidator,
-    EnduserComponent
+    EnduserComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

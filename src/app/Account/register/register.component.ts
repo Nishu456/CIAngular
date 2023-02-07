@@ -59,8 +59,13 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['Account/Login'], {queryParams: { registered: 'true' } });
           }, 
         error => {
-          console.log('Error', error),
-          Swal.fire('OOPS!!...', 'Error in Registration! Please try again!', 'error');
+          console.log('Error', error);
+          if(error.error.errors[0].code == 'DuplicateUserName'){
+            Swal.fire('Duplicate Email!!...', 'Please enter unique email!', 'warning');
+          }
+          else{
+            Swal.fire('OOPS!!...', 'Error in Registration! Please try again!', 'error');
+          }          
         } );         
     }
     else{
