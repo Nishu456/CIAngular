@@ -4,8 +4,9 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { VolunteerService } from 'src/app/Services/volunteer.service';
-import { MatSelectChange } from '@angular/material/select';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { HttpEventType } from '@angular/common/http';
+import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-fetchmissions',
@@ -31,7 +32,11 @@ export class FetchmissionsComponent implements OnInit {
   isLoading!: boolean;
   favMissionId: number[] = [];
   sortBy: string = "";
-
+  
+  @ViewChild('countrydd') countrydd!: MatSelect;
+  @ViewChild('citydd') citydd!: MatSelect;
+  @ViewChild('themedd') themedd!: MatSelect;
+  @ViewChild('skilldd') skilldd!: MatSelect;
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
   constructor(private volunteer: VolunteerService, private dialog: MatDialog,
@@ -114,6 +119,10 @@ export class FetchmissionsComponent implements OnInit {
       this.searchGrid.push(value.toLowerCase());
     }
     this.filterValues = this.searchGrid.toString();  
+    this.countrydd.options.forEach((data: MatOption) => data.deselect());
+    this.citydd.options.forEach((data: MatOption) => data.deselect());
+    this.themedd.options.forEach((data: MatOption) => data.deselect());
+    this.skilldd.options.forEach((data: MatOption) => data.deselect()); 
     this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
   }
 
