@@ -2,10 +2,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* number of lines to show */
-            line-clamp: 3; 
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
     -webkit-box-orient: vertical;
-    height: 60px;
+    height: 43px;
 }
 
 .parent{
@@ -51,4 +51,16 @@
    position: absolute;
    left: 45%;
    top: 50%;
+}
+.group{
+   display: flex;
+}
+.icon{
+   font-size: 25px;
+}
+.icontext{
+   margin-left: 10px;
+}
+.text{
+   font-size: 15px;
 }

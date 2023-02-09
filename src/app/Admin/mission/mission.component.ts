@@ -48,14 +48,32 @@ export class MissionComponent implements OnInit {
       organizationDetail: ['',[Validators.required]],
       themeId: ['',[Validators.required]],
       skills: [[], [Validators.required]],
-      startDate: ['',[Validators.required]],
-      endDate: ['',[Validators.required]],
-      totalSeats: ['',[Validators.required]],
-      registrationDeadline: ['',[Validators.required]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+      totalSeats: [''],
+      registrationDeadline: [''],
+      goalObjective: [''],
       availability: ['',[Validators.required]],
       images: [''],
       documents: ['']
     });
+
+    this.missionModel.get('missionType')?.valueChanges
+    .subscribe(value => {
+      const registrationDeadline = this.missionModel.get('registrationDeadline');
+      const goalObjective = this.missionModel.get('goalObjective');
+
+      if(value == 'Time'){
+        registrationDeadline?.setValidators(Validators.required);
+        goalObjective?.clearValidators();
+      }
+      if(value == 'Goal'){
+        goalObjective?.setValidators(Validators.required);
+        registrationDeadline?.clearValidators();
+      }
+      registrationDeadline?.updateValueAndValidity();
+      goalObjective?.updateValueAndValidity();
+    })
 
     if(this.missionId != null){
       this.mission.getMissionData(this.missionId).subscribe(
@@ -74,6 +92,7 @@ export class MissionComponent implements OnInit {
           this.missionModel.controls["endDate"].setValue(res.mission.endDate);
           this.missionModel.controls["totalSeats"].setValue(res.mission.totalSeats);
           this.missionModel.controls["registrationDeadline"].setValue(res.mission.registrationDeadline);
+          this.missionModel.controls["goalObjective"].setValue(res.mission.goalObjective);
           this.missionModel.controls["availability"].setValue(res.mission.availability);
           this.missionModel.controls["images"].setValue(res.mission.images);
           this.missionModel.controls["documents"].setValue(res.mission.documents);
@@ -166,6 +185,10 @@ export class MissionComponent implements OnInit {
 
   get documents(){
     return this.missionModel.get('documents');
+  }
+
+  get goalObjective(){
+    return this.missionModel.get('goalObjective');
   }
 
   onSubmit(){

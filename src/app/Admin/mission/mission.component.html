@@ -42,7 +42,7 @@
           <div class="form-outline mb-4 col-6">
             <mat-form-field appearance="fill" class="form-select">
               <mat-label class="form-label fw-bold">Mission Type</mat-label>
-              <mat-select formControlName="missionType" 
+              <mat-select #type formControlName="missionType" 
               [class.is-invalid]="missionType!.invalid && missionType!.touched">
               <mat-option [value]="'Time'">Time</mat-option>
               <mat-option [value]="'Goal'">Goal</mat-option>
@@ -152,28 +152,39 @@
             </mat-form-field>
           </div>
           <div class="form-outline mb-3 col-6">
-            <mat-form-field appearance="fill" class="form-control">
-              <mat-label class="form-label fw-bold">Registration Deadline</mat-label>
-              <input matInput [matDatepicker]="registrationdate" 
-              [class.is-invalid]="registrationDeadline!.invalid && registrationDeadline!.touched"
-              formControlName="registrationDeadline">
-              <mat-datepicker-toggle matIconSuffix [for]="registrationdate"></mat-datepicker-toggle>
-              <mat-datepicker #registrationdate></mat-datepicker>
-              <mat-error *ngIf="registrationDeadline!.hasError('required')">
-                Registration Deadline is Required.
+            <mat-form-field appearance="fill" class="form-select">
+              <mat-label class="form-label fw-bold">Mission Availability</mat-label>
+              <mat-select formControlName="availability" [class.is-invalid]="availability!.invalid && availability!.touched">
+                <mat-option *ngFor="let availability of availabilityList" [value]="availability.value">{{availability.text}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="availability!.hasError('required')">
+                Mission Availability is Required.
               </mat-error>
             </mat-form-field>
           </div>
         </div>
 
-        <div class="form-outline mb-4">
-          <mat-form-field appearance="fill" class="form-select">
-            <mat-label class="form-label fw-bold">Mission Availability</mat-label>
-            <mat-select formControlName="availability" [class.is-invalid]="availability!.invalid && availability!.touched">
-              <mat-option *ngFor="let availability of availabilityList" [value]="availability.value">{{availability.text}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="availability!.hasError('required')">
-              Mission Availability is Required.
+        <div class="form-outline mb-4" *ngIf="type.value == 'Time'">
+          <mat-form-field appearance="fill" class="form-control">
+            <mat-label class="form-label fw-bold">Registration Deadline</mat-label>
+            <input matInput [matDatepicker]="registrationdate" 
+            [class.is-invalid]="registrationDeadline!.invalid && registrationDeadline!.touched"
+            formControlName="registrationDeadline">
+            <mat-datepicker-toggle matIconSuffix [for]="registrationdate"></mat-datepicker-toggle>
+            <mat-datepicker #registrationdate></mat-datepicker>
+            <mat-error *ngIf="registrationDeadline!.hasError('required')">
+              Registration Deadline is Required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-outline mb-4" *ngIf="type.value == 'Goal'">
+          <mat-form-field appearance="fill" class="form-control">
+            <mat-label class="form-label fw-bold">Goal Objective</mat-label>
+            <input [class.is-invalid]="goalObjective!.invalid && goalObjective!.touched" 
+            formControlName="goalObjective" matInput/>
+            <mat-error *ngIf="goalObjective!.hasError('required')">
+              Goal Objective is Required.
             </mat-error>
           </mat-form-field>
         </div>

@@ -45,7 +45,7 @@ export class FetchmissionsComponent implements OnInit {
           }
 
   ngOnInit(): void {
-    this.getMissionRecords(0, 9);
+    this.getMissionRecords(0, 6);
   }
 
   getMissionRecords(pageIndex: number, pageSize: number, filterValues?: string, orderBy?: string){
@@ -98,7 +98,7 @@ export class FetchmissionsComponent implements OnInit {
       this.searchGrid.push(value.toLowerCase());
     }
     this.filterValues = this.searchGrid.toString();
-    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
+    this.getMissionRecords(0, 6, this.filterValues, this.sortBy);
     event.chipInput!.clear();
   }
 
@@ -109,7 +109,7 @@ export class FetchmissionsComponent implements OnInit {
       this.searchGrid.splice(index, 1);
     }
     this.filterValues = this.searchGrid.toString();
-    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
+    this.getMissionRecords(0, 6, this.filterValues, this.sortBy);
   }
 
   add(event: MatSelectChange){
@@ -123,13 +123,13 @@ export class FetchmissionsComponent implements OnInit {
     this.citydd.options.forEach((data: MatOption) => data.deselect());
     this.themedd.options.forEach((data: MatOption) => data.deselect());
     this.skilldd.options.forEach((data: MatOption) => data.deselect()); 
-    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
+    this.getMissionRecords(0, 6, this.filterValues, this.sortBy);
   }
 
   clearFilter(){
     this.searchGrid = [];
     this.filterValues = "";
-    this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
+    this.getMissionRecords(0, 6, this.filterValues, this.sortBy);
   }
 
   addtoFavorite(missionId: number){
@@ -159,7 +159,7 @@ export class FetchmissionsComponent implements OnInit {
 
     if(value){
       this.sortBy = value;
-      this.getMissionRecords(0, 9, this.filterValues, this.sortBy);
+      this.getMissionRecords(0, 6, this.filterValues, this.sortBy);
     }   
   }
 }

@@ -51,9 +51,9 @@ export class MissionviewComponent implements OnInit{
       },
       error => {
         console.log('error', error)
-        if(error.error.status == 400 && error.error.title == 'Bad Request'){
-          this.router.navigate(['../error'],{relativeTo: this.route})
-        }
+        // if(error.error.status == 400 && error.error.title == 'Bad Request'){
+        //   this.router.navigate(['../error'],{relativeTo: this.route})
+        // }
       }
     );
   }
