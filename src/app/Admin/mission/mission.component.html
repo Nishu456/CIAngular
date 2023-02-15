@@ -3,7 +3,7 @@
   <div mat-dialog-content>  
     <div class="row">
       <div class="form-outline mb-4 col-6">
-        <mat-form-field appearance="fill" class="form-control">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class="form-label fw-bold">Mission Title</mat-label>
           <input [class.is-invalid]="missionTitle!.invalid && missionTitle!.touched" 
           formControlName="missionTitle" matInput />
@@ -13,7 +13,7 @@
         </mat-form-field>
       </div>
       <div class="form-outline mb-4 col-6">
-        <mat-form-field appearance="fill" class="form-select">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class="form-label fw-bold">Country</mat-label>
           <mat-select formControlName="countryId" [class.is-invalid]="countryId!.invalid && countryId!.touched"
           (ngModelChange)="bindCityList()">
@@ -28,7 +28,7 @@
   
       <div class="row">
         <div class="form-outline mb-4 col-6">
-          <mat-form-field appearance="fill" class="form-select">
+          <mat-form-field appearance="fill" class="w-100">
             <mat-label class="form-label fw-bold">City</mat-label>
             <mat-select formControlName="cityId" [class.is-invalid]="cityId!.invalid && cityId!.touched 
             && countryId!.valid && countryId!.touched">
@@ -40,7 +40,7 @@
           </mat-form-field>
           </div>
           <div class="form-outline mb-4 col-6">
-            <mat-form-field appearance="fill" class="form-select">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label class="form-label fw-bold">Mission Type</mat-label>
               <mat-select #type formControlName="missionType" 
               [class.is-invalid]="missionType!.invalid && missionType!.touched">
@@ -55,18 +55,32 @@
         </div>
   
         <div class="form-outline mb-4">
-          <mat-form-field appearance="fill" class="form-control">
-            <mat-label class="form-label fw-bold">Mission Description</mat-label>
-            <textarea formControlName="missionDescription" 
-            [class.is-invalid]="missionDescription!.invalid && missionDescription!.touched" matInput></textarea>
-            <mat-error *ngIf="missionDescription!.hasError('required')">
-              Mission Description is Required.
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="form-label fw-bold">Mission Short Description</mat-label>
+            <textarea formControlName="shortDescription" 
+            [class.is-invalid]="shortDescription!.invalid && shortDescription!.touched" matInput></textarea>
+            <mat-error *ngIf="shortDescription!.hasError('required')">
+              Mission Short Description is Required.
             </mat-error>
           </mat-form-field> 
         </div>
+
+        <div class="form-outline mb-4">
+            <mat-label class="form-label fw-bold" style="margin-left: 15px;">Mission Description*</mat-label>
+            <angular-editor formControlName="missionDescription"
+             [config]="editorConfig" id="missiondesceditor" 
+             (blur)="missiondeschanged=true" class="w-100"
+             [class.is-invalid]="missionDescription!.invalid && missiondeschanged"></angular-editor>
+            <!-- <textarea formControlName="missionDescription" 
+            [class.is-invalid]="missionDescription!.invalid && missionDescription!.touched" matInput></textarea> -->
+            <mat-error *ngIf="missiondeschanged && missionDescription!.hasError('required')"
+            style="margin-left: 20px;">
+              Mission Description is Required.
+            </mat-error>
+        </div>
   
         <div class="form-outline mb-4">
-          <mat-form-field appearance="fill" class="form-control">
+          <mat-form-field appearance="fill" class="w-100">
             <mat-label class="form-label fw-bold">Organization Name</mat-label>
             <input [class.is-invalid]="organizationName!.invalid && organizationName!.touched" 
             formControlName="organizationName" matInput/>
@@ -76,7 +90,7 @@
           </mat-form-field>
         </div>
   
-        <div class="form-outline mb-4">
+        <!-- <div class="form-outline mb-4">
           <mat-form-field appearance="fill" class="form-control">
             <mat-label class="form-label fw-bold">Organization Details</mat-label>
             <textarea formControlName="organizationDetail" matInput
@@ -85,11 +99,25 @@
               Organization Details is Required.
             </mat-error>
           </mat-form-field>
-        </div>
+        </div> -->
+
+        <div class="form-outline mb-4">
+          <mat-label class="form-label fw-bold" style="margin-left: 15px;">Organization Details*</mat-label>
+          <angular-editor formControlName="organizationDetail"
+           [config]="editorConfig" id="orgdesceditor"
+           (blur)="orgdeschanged=true" class="w-100"
+           [class.is-invalid]="organizationDetail!.invalid && orgdeschanged"></angular-editor>
+          <!-- <textarea formControlName="missionDescription" 
+          [class.is-invalid]="missionDescription!.invalid && missionDescription!.touched" matInput></textarea> -->
+          <mat-error *ngIf="orgdeschanged && organizationDetail!.hasError('required')"
+          style="margin-left: 20px;">
+            Organization Details is Required.
+          </mat-error>
+      </div>
   
         <div class="row">
           <div class="form-outline mb-4 col-6">
-            <mat-form-field appearance="fill" class="form-select">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label class="form-label fw-bold">Mission Theme</mat-label>
               <mat-select formControlName="themeId" [class.is-invalid]="themeId!.invalid && themeId!.touched">
                 <mat-option *ngFor="let theme of themeList" [value]="theme.value">{{theme.text}}</mat-option>
@@ -100,7 +128,7 @@
             </mat-form-field>
             </div>
             <div class="form-outline mb-4 col-6">
-              <mat-form-field appearance="fill" class="form-select">
+              <mat-form-field appearance="fill" class="w-100">
                 <mat-label class="form-label fw-bold">Mission Skills</mat-label>
                 <mat-select formControlName="skills" [class.is-invalid]="skills!.invalid && skills!.touched" multiple="true">
                   <mat-option *ngFor="let skill of skillList" [value]="skill.value">{{skill.text}}</mat-option>
@@ -114,7 +142,7 @@
 
         <div class="row">            
           <div class="form-outline mb-3 col-6">
-            <mat-form-field appearance="fill" class="form-control">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label class="form-label fw-bold">Start Date</mat-label>
               <input matInput [matDatepicker]="startdatepicker" [class.is-invalid]="startDate!.invalid && startDate!.touched" 
             formControlName="startDate">
@@ -126,7 +154,7 @@
             </mat-form-field>
           </div>
           <div class="form-outline mb-3 col-6">
-            <mat-form-field appearance="fill" class="form-control">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label class="form-label fw-bold">End Date</mat-label>
               <input matInput [matDatepicker]="enddatepicker" [class.is-invalid]="endDate!.invalid && endDate!.touched" 
             formControlName="endDate">
@@ -141,7 +169,7 @@
   
         <div class="row">
           <div class="form-outline mb-3 col-6">
-            <mat-form-field appearance="fill" class="form-control">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label class="form-label fw-bold">Total Seats</mat-label>
               <input type="number" formControlName="totalSeats" 
               [class.is-invalid]="totalSeats!.invalid && totalSeats!.touched"
@@ -152,7 +180,7 @@
             </mat-form-field>
           </div>
           <div class="form-outline mb-3 col-6">
-            <mat-form-field appearance="fill" class="form-select">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label class="form-label fw-bold">Mission Availability</mat-label>
               <mat-select formControlName="availability" [class.is-invalid]="availability!.invalid && availability!.touched">
                 <mat-option *ngFor="let availability of availabilityList" [value]="availability.value">{{availability.text}}</mat-option>
@@ -165,7 +193,7 @@
         </div>
 
         <div class="form-outline mb-4" *ngIf="type.value == 'Time'">
-          <mat-form-field appearance="fill" class="form-control">
+          <mat-form-field appearance="fill" class="w-100">
             <mat-label class="form-label fw-bold">Registration Deadline</mat-label>
             <input matInput [matDatepicker]="registrationdate" 
             [class.is-invalid]="registrationDeadline!.invalid && registrationDeadline!.touched"
@@ -179,7 +207,7 @@
         </div>
 
         <div class="form-outline mb-4" *ngIf="type.value == 'Goal'">
-          <mat-form-field appearance="fill" class="form-control">
+          <mat-form-field appearance="fill" class="w-100">
             <mat-label class="form-label fw-bold">Goal Objective</mat-label>
             <input [class.is-invalid]="goalObjective!.invalid && goalObjective!.touched" 
             formControlName="goalObjective" matInput/>

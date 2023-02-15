@@ -7,6 +7,8 @@ import { VolunteerService } from 'src/app/Services/volunteer.service';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { HttpEventType } from '@angular/common/http';
 import { MatOption } from '@angular/material/core';
+import { Router } from '@angular/router';
+import { VolunteermissionComponent } from '../volunteermission/volunteermission.component';
 
 @Component({
   selector: 'app-fetchmissions',
@@ -32,6 +34,7 @@ export class FetchmissionsComponent implements OnInit {
   isLoading!: boolean;
   favMissionId: number[] = [];
   sortBy: string = "";
+  rating: number = 0;
   
   @ViewChild('countrydd') countrydd!: MatSelect;
   @ViewChild('citydd') citydd!: MatSelect;
@@ -40,7 +43,7 @@ export class FetchmissionsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
   constructor(private volunteer: VolunteerService, private dialog: MatDialog,
-          private custompaginator: MatPaginatorIntl){
+          private custompaginator: MatPaginatorIntl, private router: Router){
             custompaginator.itemsPerPageLabel = "Missions Per Page";
           }
 
@@ -161,5 +164,24 @@ export class FetchmissionsComponent implements OnInit {
       this.sortBy = value;
       this.getMissionRecords(0, 6, this.filterValues, this.sortBy);
     }   
+  }
+
+   DetailVolunteerMission(mission: any){
+    this.dialog.open(VolunteermissionComponent, {
+      width: '75%',
+      height: '75%',
+      data: mission
+  });
+    //this.router.navigate(['EndUserPage/volunteermission',{mission:mission}])
+    //this.router.navigate(['EndUserPage/volunteermission'], {state: { mission: mission } });
+  }
+
+  RateMission(missionId: number, rating: number){
+    if(rating > 0){
+      this.volunteer.missionRating(missionId, rating).subscribe(
+        res => console.log(res),
+        error => console.log(error)        
+      );
+    }      
   }
 }

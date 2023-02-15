@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EnduserRoutingModule } from './enduser-routing.module';
+import { EndUserRouteComponent, EnduserRoutingModule } from './enduser-routing.module';
 import { MaterialModule } from '../material/material.module';
-import { FetchmissionsComponent } from './fetchmissions/fetchmissions.component';
+import { NgbRating, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   declarations: [
-    FetchmissionsComponent
+    EndUserRouteComponent
   ],
   imports: [
     CommonModule,
     EnduserRoutingModule,
-    MaterialModule
+    MaterialModule,
+    NgbRating,
+    NgbCarousel
   ]
 })
 export class EnduserModule { }

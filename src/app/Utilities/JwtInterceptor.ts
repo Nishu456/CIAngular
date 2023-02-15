@@ -20,18 +20,18 @@ export class JwtInterceptor implements HttpInterceptor{
                 authorization: `Bearer ${token}`
             }});
         }
-        //return next.handle(req);
+        return next.handle(req);
 
-        return next.handle(req).pipe(
-            catchError((error: any)=>{
-                if(error instanceof HttpErrorResponse){
-                    if(error.status === 400 || error.status === 0){
-                        this.router.navigate(['../error'],{relativeTo: this.route})
-                      }
-                }
-                return throwError(()=>error);
-                }
-            )
-        )
+        // return next.handle(req).pipe(
+        //     catchError((error: any)=>{
+        //         if(error instanceof HttpErrorResponse){
+        //             if(error.status === 400 || error.status === 0){
+        //                 this.router.navigate(['../error'],{relativeTo: this.route})
+        //               }
+        //         }
+        //         return throwError(()=>error);
+        //         }
+        //     )
+        // )
     }
 }

@@ -48,6 +48,8 @@ export class MissionthemeComponent implements OnInit {
   }
 
   onSubmit(){
+    console.log(this.missionThemeModel.value);
+    
     this.theme.postThemeData(this.missionThemeModel.value, this.themeId)
     .subscribe(
       res => {

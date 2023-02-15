@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AdminRouteComponents, AdminRoutingModule } from './admin-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { MaterialModule } from '../material/material.module';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -16,8 +16,8 @@ import { MaterialModule } from '../material/material.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RichTextEditorModule,
-    MaterialModule
+    MaterialModule,
+    AngularEditorModule
   ]
 })
 export class AdminModule { }

@@ -1,0 +1,12 @@
+.group{
+    display: flex;
+ }
+ .icon{
+    font-size: 25px;
+ }
+ .icontext{
+    margin-left: 10px;
+ }
+ .text{
+    font-size: 15px;
+ }

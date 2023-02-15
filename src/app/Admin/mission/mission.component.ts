@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient, HttpHeaders, HttpRequest, HttpEventType } from "@angular/common/http";
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-mission',
@@ -30,7 +31,9 @@ export class MissionComponent implements OnInit {
   progressInfos: any;
   imgprogress!: number;
   docprogress!: number;
-  
+  missiondeschanged = false;
+  orgdeschanged = false;
+
   constructor(private fb: FormBuilder, private mission: AdminService, private datePipe: DatePipe,
     private dialogref: MatDialogRef<MissionComponent>, @Inject(MAT_DIALOG_DATA) private data: number){ 
       this.missionId = data
@@ -43,6 +46,7 @@ export class MissionComponent implements OnInit {
       countryId: ['',[Validators.required]],
       cityId: ['',[Validators.required]],
       missionType: ['',[Validators.required]],
+      shortDescription: ['',[Validators.required]],
       missionDescription: ['',[Validators.required]],
       organizationName: ['',[Validators.required]],
       organizationDetail: ['',[Validators.required]],
@@ -82,6 +86,7 @@ export class MissionComponent implements OnInit {
           this.missionModel.controls["countryId"].setValue(res.mission.countryId.toString());
           this.missionModel.controls["cityId"].setValue(res.mission.cityId.toString());
           this.missionModel.controls["missionType"].setValue(res.mission.missionType);
+          this.missionModel.controls["shortDescription"].setValue(res.mission.shortDescription);
           this.missionModel.controls["missionDescription"].setValue(res.mission.missionDescription);
           this.missionModel.controls["organizationName"].setValue(res.mission.organizationName);
           this.missionModel.controls["organizationDetail"].setValue(res.mission.organizationDetail);
@@ -139,6 +144,10 @@ export class MissionComponent implements OnInit {
     return this.missionModel.get('missionType');
   }
 
+  get shortDescription(){
+    return this.missionModel.get('shortDescription');
+  }
+
   get missionDescription(){
     return this.missionModel.get('missionDescription');
   }
@@ -190,6 +199,45 @@ export class MissionComponent implements OnInit {
   get goalObjective(){
     return this.missionModel.get('goalObjective');
   }
+
+  editorConfig: AngularEditorConfig = {
+      editable: true,
+      spellcheck: true,
+      height: '10rem',
+      minHeight: '5rem',
+      maxHeight: 'auto',
+      width: 'auto',
+      minWidth: '0',
+      translate: 'yes',
+      enableToolbar: true,
+      showToolbar: true,
+      placeholder: 'Enter text here...',
+      defaultParagraphSeparator: 'p',
+      defaultFontName: 'Arial',
+      defaultFontSize: '',
+      fonts: [
+        {class: 'arial', name: 'Arial'},
+        {class: 'times-new-roman', name: 'Times New Roman'},
+        {class: 'calibri', name: 'Calibri'},
+        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      ],
+      toolbarPosition: 'top',      
+      customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ]
+};
 
   onSubmit(){
     console.log(this.missionModel.value);

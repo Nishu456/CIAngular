@@ -2,7 +2,7 @@
 <form [formGroup]="missionSkillModel" (ngSubmit)="onSubmit()">
   <div mat-dialog-content>  
       <div class="form-outline mb-4">
-        <mat-form-field appearance="fill" class="form-control">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class="form-label fw-bold">Skill Title</mat-label>
           <input [class.is-invalid]="skillTitle!.invalid && skillTitle!.touched" 
           formControlName="skillTitle" matInput />

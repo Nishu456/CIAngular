@@ -51,4 +51,17 @@ export class VolunteerService {
         catchError(error => throwError(error))
         );
       }
+
+  missionRating(missionId: number, rate: number){
+    var body = {
+      missionId: missionId,
+      rate: rate
+    }
+    console.log(body);
+    
+    return this.http.post(`${this.apiBaseurl}Volunteer/missionRating`, body).pipe(
+      map(res => res),
+      catchError(error => throwError(error))
+    );
+  }
 }
