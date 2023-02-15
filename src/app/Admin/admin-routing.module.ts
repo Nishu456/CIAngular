@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from '../Shared/error/error.component';
 import { DemoComponent } from './demo/demo.component';
 import { MissionComponent } from './mission/mission.component';
+import { MissionapplicationComponent } from './missionapplication/missionapplication.component';
 import { MissionskillComponent } from './missionskill/missionskill.component';
 import { MissionskillviewComponent } from './missionskillview/missionskillview.component';
 import { MissionthemeComponent } from './missiontheme/missiontheme.component';
@@ -20,7 +21,8 @@ export const adminroutes: Routes = [
   {path:'MissionSkill', component:MissionskillviewComponent},
   // {path:'UpsertMission', component:MissionComponent},
   {path:'demo', component:DemoComponent},
-  {path:'error', component:ErrorComponent}
+  {path:'error', component:ErrorComponent},
+  {path:'MissionApplication', component:MissionapplicationComponent}
 ];
 
 @NgModule({
@@ -31,4 +33,4 @@ export class AdminRoutingModule { }
 
 export const AdminRouteComponents = [UserComponent, UserviewComponent, MissionComponent, MissionviewComponent,
                           DemoComponent, MissionthemeComponent, MissionthemeviewComponent,  MissionskillComponent,
-                          MissionskillviewComponent]
+                          MissionskillviewComponent, MissionapplicationComponent]

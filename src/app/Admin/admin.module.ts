@@ -8,7 +8,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
-    AdminRouteComponents,    
+    AdminRouteComponents
   ],
   imports: [
     CommonModule,

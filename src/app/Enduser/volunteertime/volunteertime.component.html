@@ -1,0 +1,53 @@
+<h2 matDialogTitle> Please input below Volunteering Hours </h2>
+<form>
+    <div matDialogContent>
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="form-label fw-bold">Mission</mat-label>
+            <input matInput />
+            <!-- <mat-error>
+              Mission Title is Required.
+            </mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="form-label fw-bold">Date Volunteered</mat-label>
+            <input matInput [matDatepicker]="volunteeringdate">
+            <mat-datepicker-toggle matIconSuffix [for]="volunteeringdate"></mat-datepicker-toggle>
+            <mat-datepicker #volunteeringdate></mat-datepicker>
+            <!-- <mat-error>
+              Mission Title is Required.
+            </mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="form-label fw-bold">Hours</mat-label>
+            <input matInput type="number"/>
+            <!-- <mat-error>
+              Mission Title is Required.
+            </mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="form-label fw-bold">Minutes</mat-label>
+            <input matInput type="number"/>
+            <!-- <mat-error>
+              Mission Title is Required.
+            </mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="form-label fw-bold">Message</mat-label>
+            <textarea matInput></textarea>
+            <!-- <mat-error>
+              Mission Title is Required.
+            </mat-error> -->
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button type="submit"  class="btn btn-lg"
+                  style="padding-left: 2.5rem; padding-right: 2.5rem; margin-right: 0.5em;" 
+                  mat-raised-button color="primary">Submit</button>
+                  <button class="btn btn-lg" mat-raised-button [mat-dialog-close]="true"
+                  style="padding-left: 2.5rem; padding-right: 2.5rem;" color="warn">Cancel</button>
+      </div>
+</form>

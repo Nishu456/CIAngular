@@ -1,0 +1,52 @@
+<div class="container-fluid mt-4 mb-4">
+    <h2>Missions Application</h2>
+    <hr>
+    <mat-form-field class="w-50">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter(searchMission.value)" #searchMission>
+        <mat-icon matSuffix>search</mat-icon>
+   </mat-form-field> 
+    <div class="mat-elevation-z8 mt-2 table-responsive">
+    <table mat-table [dataSource]="missionApplication" matSort>
+        <ng-container matColumnDef="missionTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Mission Title</th>
+            <td mat-cell *matCellDef="let row">{{row.missionTitle}}</td>
+        </ng-container>
+        <ng-container matColumnDef="missionId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Mission Id</th>
+            <td mat-cell *matCellDef="let row">{{row.missionId}}</td>
+        </ng-container>
+        <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>User Id</th>
+            <td mat-cell *matCellDef="let row">{{row.userId}}</td>
+        </ng-container>
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>User Name</th>
+            <td mat-cell *matCellDef="let row">{{row.userName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="appliedDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Applied Date</th>
+            <td mat-cell *matCellDef="let row">{{row.appliedDate | date: 'dd/MM/yyyy'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+            <td mat-cell *matCellDef="let row"><a (click)="applicationStatus(row.volunteerId, 'Accepted')" 
+                style="margin-right: 0.5em;">
+                <mat-icon color="primary" matTooltip="Accept Application">check_circle_outline</mat-icon></a>
+                <a (click)="applicationStatus(row.volunteerId, 'Declined')">
+                    <mat-icon color="warn" matTooltip="Decline Application">cancel</mat-icon></a></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="aaplicationColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: aaplicationColumns;"></tr>
+        
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="5" *ngIf="searchMission.value" style="text-align: center;">
+                No data matching the filter "{{searchMission.value}}"</td>
+            <td class="mat-cell" colspan="5" *ngIf="!searchMission.value" style="text-align: center;">
+                No Records Found</td>
+        </tr>
+    </table>
+    <mat-paginator showFirstLastButtons [pageSizeOptions]="[5,10,25,50,100]" aria-label="Select page of mission"
+    ></mat-paginator>
+    </div>
+</div>

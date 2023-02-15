@@ -175,7 +175,8 @@
             </mat-card-content>
             <hr>
             <mat-card-actions style="justify-content: center;">
-              <button mat-stroked-button color="warn">                
+              <button mat-stroked-button color="warn" type="button" 
+              (click)="missionApply(mission.missionId, mission.missionTitle)">                
                 Apply
                 <mat-icon>arrow_right_alt</mat-icon>
               </button>

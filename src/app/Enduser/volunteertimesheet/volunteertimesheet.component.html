@@ -4,15 +4,11 @@
         <div class="col-6">
             <mat-card>
                 <mat-card-header>
-                    <div class="row">
-                        <div class="col-8">
-                            <mat-card-title>Volunteering Hours</mat-card-title>
-                        </div>
-                        <div class="col-4" style="float: right;">
-                            <button mat-stroked-button color="warn">
-                                Add <mat-icon>add</mat-icon></button>  
-                        </div>
-                    </div> 
+                    <mat-card-title>Volunteering Hours</mat-card-title>
+                    <div class="top-right">
+                        <button mat-stroked-button color="warn" type="button"
+                        (click)="openVolunteerTime()">Add <mat-icon>add</mat-icon></button>  
+                    </div>                    
                 </mat-card-header>                
                 <mat-card-content>
                     <div class="mat-elevation-z8 mt-2 table-responsive mt-4">
@@ -21,7 +17,7 @@
                                 <th mat-header-cell *matHeaderCellDef>Mission</th>
                             </ng-container>
                             <ng-container matColumnDef="date">
-                                <th mat-header-cell *matHeaderCellDef>Date</th>
+                                <th mat-header-cell *matHeaderCellDef>Date Volunteered</th>
                             </ng-container>
                             <ng-container matColumnDef="hours">
                                 <th mat-header-cell *matHeaderCellDef>Hours</th>
@@ -38,7 +34,11 @@
         <div class="col-6">
             <mat-card>
                 <mat-card-header>
-                    <mat-card-title>Volunteering Goals</mat-card-title>   
+                    <mat-card-title>Volunteering Goals</mat-card-title> 
+                    <div class="top-right">
+                        <button mat-stroked-button color="warn" type="button"
+                        (click)="openVolunteerGoal()">Add <mat-icon>add</mat-icon></button>  
+                    </div>      
                 </mat-card-header>                
                 <mat-card-content>
                     <div class="mat-elevation-z8 mt-2 table-responsive mt-4">
@@ -47,7 +47,7 @@
                                 <th mat-header-cell *matHeaderCellDef>Mission</th>
                             </ng-container>
                             <ng-container matColumnDef="date">
-                                <th mat-header-cell *matHeaderCellDef>Date</th>
+                                <th mat-header-cell *matHeaderCellDef>Date Volunteered</th>
                             </ng-container>
                             <ng-container matColumnDef="action">
                                 <th mat-header-cell *matHeaderCellDef>Action</th>

@@ -224,4 +224,22 @@ export class AdminService {
       catchError(error => throwError(error))
     );
   }
+
+  getMissionApplication(){
+    return this.http.get(`${this.apiBaseurl}Admin/missionApplication`).pipe(
+      map(res => res),
+      catchError(error => throwError(error))
+    );
+  }
+
+  updateApplication(volunteerId:number, action:string){
+    var body = {
+      volunteerId: volunteerId,
+      action: action
+    };
+    return this.http.post(`${this.apiBaseurl}Admin/updateApplication`, body).pipe(
+      map(res => res),
+      catchError(error => throwError(error))
+    );
+  }
 }

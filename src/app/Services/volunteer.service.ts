@@ -64,4 +64,11 @@ export class VolunteerService {
       catchError(error => throwError(error))
     );
   }
+
+  missionVolunteering(missionId: number){
+    return this.http.post(`${this.apiBaseurl}Volunteer/missionVolunteering`, missionId).pipe(
+      map(res=>res),
+      catchError(error => throwError(error))
+    );
+  }
 }

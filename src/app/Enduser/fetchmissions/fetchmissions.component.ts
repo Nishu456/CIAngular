@@ -9,6 +9,7 @@ import { HttpEventType } from '@angular/common/http';
 import { MatOption } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { VolunteermissionComponent } from '../volunteermission/volunteermission.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-fetchmissions',
@@ -183,5 +184,44 @@ export class FetchmissionsComponent implements OnInit {
         error => console.log(error)        
       );
     }      
+  }
+
+  missionApply(missionId: number, missionTitle: string){
+    Swal.fire({
+      title: 'Are you sure you want to apply for this mission?',
+      text: 'Mission Title: '+missionTitle,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Apply',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if(result.value){
+        this.volunteer.missionVolunteering(missionId).subscribe(
+          res => {
+            Swal.fire(
+              'Applied!',
+              'You application for Mission ('+missionTitle+') Successfully Applied.',
+              'success'
+            )
+            //this.getMissionRecords(0, 6, this.filterValues, this.sortBy);
+          },
+          error => {
+            console.log('error', error);
+            Swal.fire(
+              'Oops!',
+              'Error in mission application, please try again.',
+              'error'
+            );
+          }
+        )
+      }
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Swal.fire(
+        //   'Cancelled',
+        //   'Your imaginary file is safe :)',
+        //   'error'
+        // )
+      }
+    })    
   }
 }
