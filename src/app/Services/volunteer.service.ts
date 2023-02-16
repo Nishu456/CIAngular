@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, throwError } from 'rxjs';
 import { environment } from '../Utilities/getAPIUrl';
@@ -65,10 +65,61 @@ export class VolunteerService {
     );
   }
 
+  timeMissionList(){
+    return this.http.get(`${this.apiBaseurl}Volunteer/timeMissionList`).pipe(
+      map(res => res),
+      catchError(error => throwError(error))
+    );
+  }
+
+  goalMissionList(){
+    return this.http.get(`${this.apiBaseurl}Volunteer/goalMissionList`).pipe(
+      map(res => res),
+      catchError(error => throwError(error))
+    );
+  }
+
   missionVolunteering(missionId: number){
     return this.http.post(`${this.apiBaseurl}Volunteer/missionVolunteering`, missionId).pipe(
       map(res=>res),
       catchError(error => throwError(error))
     );
+  }
+
+  upsertVolunteerTime(timeData:any, timeId?: number){
+    if(timeId != undefined){
+      return this.http.post(`${this.apiBaseurl}Volunteer/upsertVolunteerTime?timeId=${timeId}`,timeData).pipe(
+        map(res => res),
+        catchError(error => throwError(error))
+      );
+    }
+    else{
+      return this.http.post(`${this.apiBaseurl}Volunteer/upsertVolunteerTime`,timeData).pipe(
+        map(res => res),
+        catchError(error => throwError(error))
+      );
+    }    
+  }
+
+  upsertVolunteerGoal(goalData:any, goalId?: number){
+    if(goalId != undefined){
+      return this.http.post(`${this.apiBaseurl}Volunteer/upsertVolunteerGoal?goalId=${goalId}`,goalData).pipe(
+        map(res => res),
+        catchError(error => throwError(error))
+      );
+    }
+    else{
+      return this.http.post(`${this.apiBaseurl}Volunteer/upsertVolunteerGoal`,goalData).pipe(
+        map(res => res),
+        catchError(error => throwError(error))
+      );
+    }
+  }
+
+  getVolunteerTimeSheet(){
+    return this.http.get(`${this.apiBaseurl}Volunteer/volunteerTimesheet`).pipe(
+      map(res => res),
+      catchError(error => throwError(error))
+    )
   }
 }

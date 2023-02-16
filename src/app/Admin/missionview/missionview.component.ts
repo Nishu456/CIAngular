@@ -109,7 +109,8 @@ export class MissionviewComponent implements OnInit{
   openUpsertMission(missionId?: number){
     this.dialog.open(MissionComponent, {
       width: '50%',
-      data: missionId
+      data: missionId,
+      disableClose: true
   }).afterClosed().subscribe(() => {
        this.getMissionDatafromServer(0,5);
        console.log(this.missionData.paginator);

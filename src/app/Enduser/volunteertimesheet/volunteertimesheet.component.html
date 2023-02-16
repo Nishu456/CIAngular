@@ -2,7 +2,7 @@
     <div class="mat-headline-5">Volunteering Timesheet</div>
     <div class="row">
         <div class="col-6">
-            <mat-card>
+            <mat-card style="min-height: 400px; max-height: auto;">
                 <mat-card-header>
                     <mat-card-title>Volunteering Hours</mat-card-title>
                     <div class="top-right">
@@ -12,27 +12,46 @@
                 </mat-card-header>                
                 <mat-card-content>
                     <div class="mat-elevation-z8 mt-2 table-responsive mt-4">
-                        <table mat-table>
+                        <table mat-table [dataSource]="volunteerTime" matSort>
                             <ng-container matColumnDef="mission">
                                 <th mat-header-cell *matHeaderCellDef>Mission</th>
+                                <td mat-cell *matCellDef="let row">{{row.mission}}</td>
                             </ng-container>
                             <ng-container matColumnDef="date">
                                 <th mat-header-cell *matHeaderCellDef>Date Volunteered</th>
+                                <td mat-cell *matCellDef="let row">{{row.date | date: 'dd/MM/yyy'}}</td>
                             </ng-container>
                             <ng-container matColumnDef="hours">
                                 <th mat-header-cell *matHeaderCellDef>Hours</th>
+                                <td mat-cell *matCellDef="let row">{{row.hours}}</td>
                             </ng-container>
                             <ng-container matColumnDef="minutes">
                                 <th mat-header-cell *matHeaderCellDef>Minutes</th>
+                                <td mat-cell *matCellDef="let row">{{row.minutes}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a (click)="openVolunteerTime(row)" 
+                                    style="margin-right: 0.5em;">
+                                    <mat-icon color="primary">edit</mat-icon></a>
+                                    <a (click)="deleteVolunteerTime(row)">
+                                    <mat-icon color="warn">delete</mat-icon></a></td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="timeColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: timeColumns;"></tr>
+        
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="5" style="text-align: center;">
+                                    No Records Found</td>
+                            </tr>
                         </table>
                     </div>
                 </mat-card-content>              
             </mat-card>            
         </div>
         <div class="col-6">
-            <mat-card>
+            <mat-card style="min-height: 400px; max-height: auto;">
                 <mat-card-header>
                     <mat-card-title>Volunteering Goals</mat-card-title> 
                     <div class="top-right">
@@ -42,17 +61,35 @@
                 </mat-card-header>                
                 <mat-card-content>
                     <div class="mat-elevation-z8 mt-2 table-responsive mt-4">
-                        <table mat-table>
+                        <table mat-table [dataSource]="volunteerGoal" matSort>
                             <ng-container matColumnDef="mission">
-                                <th mat-header-cell *matHeaderCellDef>Mission</th>
+                                <th mat-header-cell *matHeaderCellDef width="250">Mission</th>
+                                <td mat-cell *matCellDef="let row">{{row.mission}}</td>
                             </ng-container>
                             <ng-container matColumnDef="date">
                                 <th mat-header-cell *matHeaderCellDef>Date Volunteered</th>
+                                <td mat-cell *matCellDef="let row">{{row.date | date: 'dd/MM/yyyy'}}</td>
                             </ng-container>
                             <ng-container matColumnDef="action">
                                 <th mat-header-cell *matHeaderCellDef>Action</th>
+                                <td mat-cell *matCellDef="let row">{{row.actions}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a (click)="openVolunteerGoal(row)" 
+                                    style="margin-right: 0.5em;">
+                                    <mat-icon color="primary">edit</mat-icon></a>
+                                    <a (click)="deleteVolunteerGoal(row)">
+                                    <mat-icon color="warn">delete</mat-icon></a></td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="goalColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: goalColumns;"></tr>
+        
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="5" style="text-align: center;">
+                                    No Records Found</td>
+                            </tr>
                         </table>
                     </div>
                 </mat-card-content>             

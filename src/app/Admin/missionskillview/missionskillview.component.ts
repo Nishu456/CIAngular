@@ -58,7 +58,8 @@ export class MissionskillviewComponent implements OnInit {
   openUpsertMissionSkill(skillRecord?: any){
     this.dialog.open(MissionskillComponent,{
       width: '30%',
-      data: skillRecord
+      data: skillRecord,
+      disableClose: true
     }).afterClosed().subscribe(() => {
       this.getMissionSkills(0,5);
     });

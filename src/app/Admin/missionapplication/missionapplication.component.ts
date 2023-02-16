@@ -14,6 +14,7 @@ export class MissionapplicationComponent implements OnInit{
   
   missionApplication!: any;
   aaplicationColumns = ["missionTitle", "missionId", "userId", "userName", "appliedDate", "action"];
+  //applicationSt = false;
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;

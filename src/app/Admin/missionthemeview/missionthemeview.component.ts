@@ -57,7 +57,8 @@ export class MissionthemeviewComponent implements OnInit {
   openUpsertMissionTheme(themeRecord?: any){
     this.dialog.open(MissionthemeComponent,{
       width: '30%',
-      data: themeRecord
+      data: themeRecord,
+      disableClose: true
     }).afterClosed().subscribe(() => {
       this.getMissionThemes(0,5);
       console.log(this.themedata.paginator);

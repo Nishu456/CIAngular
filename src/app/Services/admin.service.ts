@@ -71,7 +71,6 @@ export class AdminService {
   }
 
   getMissionData(id?: number){
-    console.log("id",id)
     if(id != undefined){
       return this.http.get(`${this.apiBaseurl}Admin/getMission?id=${id}`).pipe(
         map(res => res),

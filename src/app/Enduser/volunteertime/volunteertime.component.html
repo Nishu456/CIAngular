@@ -1,53 +1,70 @@
-<h2 matDialogTitle> Please input below Volunteering Hours </h2>
-<form>
-    <div matDialogContent>
-        <mat-form-field appearance="fill" class="w-100">
-            <mat-label class="form-label fw-bold">Mission</mat-label>
-            <input matInput />
-            <!-- <mat-error>
-              Mission Title is Required.
-            </mat-error> -->
-        </mat-form-field>
+<div *ngIf="missionList.length > 0">
+  <h2 matDialogTitle> Please input below Volunteering Hours </h2>
+  <form [formGroup]="timeModel" (ngSubmit)="onSubmit()">
+      <div matDialogContent>
+          <mat-form-field appearance="fill" class="w-100">
+              <mat-label class="form-label fw-bold">Mission</mat-label>
+              <mat-select [class.is-invalid]="missionId!.invalid && missionId!.touched"
+                formControlName="missionId"> 
+                <mat-option *ngFor="let mission of missionList" [value]="mission.value">{{mission.text}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="missionId!.hasError('required')">
+                Mission is Required.
+              </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-100">
-            <mat-label class="form-label fw-bold">Date Volunteered</mat-label>
-            <input matInput [matDatepicker]="volunteeringdate">
-            <mat-datepicker-toggle matIconSuffix [for]="volunteeringdate"></mat-datepicker-toggle>
-            <mat-datepicker #volunteeringdate></mat-datepicker>
-            <!-- <mat-error>
-              Mission Title is Required.
-            </mat-error> -->
-        </mat-form-field>
+          <mat-form-field appearance="fill" class="w-100">
+              <mat-label class="form-label fw-bold">Date Volunteered</mat-label>
+              <input matInput [matDatepicker]="volunteeringdate" formControlName="date"
+              [class.is-invalid]="date!.invalid && date!.touched">
+              <mat-datepicker-toggle matIconSuffix [for]="volunteeringdate"></mat-datepicker-toggle>
+              <mat-datepicker #volunteeringdate></mat-datepicker>
+              <mat-error *ngIf="date!.hasError('required')">
+                Date Volunteered is Required.
+              </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-100">
-            <mat-label class="form-label fw-bold">Hours</mat-label>
-            <input matInput type="number"/>
-            <!-- <mat-error>
-              Mission Title is Required.
-            </mat-error> -->
-        </mat-form-field>
+          <mat-form-field appearance="fill" class="w-100">
+              <mat-label class="form-label fw-bold">Hours</mat-label>
+              <input matInput type="number" formControlName="hours"
+              [class.is-invalid]="hours!.invalid && hours!.touched"/>
+              <mat-error *ngIf="hours!.hasError('required')">
+                Hours is Required.
+              </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-100">
-            <mat-label class="form-label fw-bold">Minutes</mat-label>
-            <input matInput type="number"/>
-            <!-- <mat-error>
-              Mission Title is Required.
-            </mat-error> -->
-        </mat-form-field>
+          <mat-form-field appearance="fill" class="w-100">
+              <mat-label class="form-label fw-bold">Minutes</mat-label>
+              <input matInput type="number" formControlName="minutes"
+              [class.is-invalid]="minutes!.invalid && minutes!.touched"/>
+              <mat-error *ngIf="minutes!.hasError('required')">
+                Minutes is Required.
+              </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-100">
-            <mat-label class="form-label fw-bold">Message</mat-label>
-            <textarea matInput></textarea>
-            <!-- <mat-error>
-              Mission Title is Required.
-            </mat-error> -->
-        </mat-form-field>
-    </div>
-    <div mat-dialog-actions>
-        <button type="submit"  class="btn btn-lg"
-                  style="padding-left: 2.5rem; padding-right: 2.5rem; margin-right: 0.5em;" 
-                  mat-raised-button color="primary">Submit</button>
-                  <button class="btn btn-lg" mat-raised-button [mat-dialog-close]="true"
-                  style="padding-left: 2.5rem; padding-right: 2.5rem;" color="warn">Cancel</button>
+          <mat-form-field appearance="fill" class="w-100">
+              <mat-label class="form-label fw-bold">Message</mat-label>
+              <textarea matInput formControlName="message"></textarea>
+              <!-- <mat-error *ngIf="message!.hasError('required')">
+                Message is Required.
+              </mat-error> -->
+          </mat-form-field>
       </div>
-</form>
+      <div mat-dialog-actions>
+          <button type="submit"  class="btn btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem; margin-right: 0.5em;" 
+                    mat-raised-button color="primary" [disabled]="!timeModel.valid">Submit</button>
+                    <button class="btn btn-lg" mat-raised-button [mat-dialog-close]="true"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;" color="warn">Cancel</button>
+        </div>
+  </form>
+</div>
+<div *ngIf="missionList.length <= 0">
+  <h2 matDialogTitle> Mission records not found for Volunteering Hours </h2>
+  <div matDialogContent>
+    <button mat-button routerLink="EndUserPage/missionrecords" [mat-dialog-close]="true">
+      Explore Missions
+      <mat-icon>arrow_right_alt</mat-icon>
+    </button>
+  </div>
+</div>
